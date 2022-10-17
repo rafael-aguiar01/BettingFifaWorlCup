@@ -1,5 +1,7 @@
+import { HttpResponse, HttpRequest } from '../../protocols/http'
+
 export class AddNationController {
-  handle (httpRequest: any): any{
+  handle (httpRequest: HttpRequest): HttpResponse{
     if (!httpRequest.body.code){
       return {
         statusCode: 400,
