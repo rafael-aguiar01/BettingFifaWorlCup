@@ -1,6 +1,6 @@
 import { AddNationController } from './add-nation'
-import { MissingParamError } from '../../errors'
-import { badRequest } from '../../helpers/http-helper'
+import { MissingParamError, ServerError } from '../../errors'
+import { badRequest, serverError } from '../../helpers/http-helper'
 import { NationModel } from '../../../domain/models/nation'
 import { AddNationModel, AddNation } from '../../../domain/usecases/add-nation'
 import { HttpRequest } from '../../protocols/http'
@@ -52,6 +52,7 @@ describe('AddNation Controller', () => {
     expect(httpResponse.statusCode).toBe(400)
     expect(httpResponse).toEqual(badRequest(new MissingParamError('code')))
   })
+
   test('Should return 400 if no name is provided', async () => {
     const { sut } = makeSut()
     const httpRequest = {
@@ -63,6 +64,7 @@ describe('AddNation Controller', () => {
     expect(httpResponse.statusCode).toBe(400)
     expect(httpResponse).toEqual(badRequest(new MissingParamError('name')))
   })
+
   test('Should call AddNation with correct values', async () => {
     const { sut, addNationStub } = makeSut()
     const addSpy = jest.spyOn(addNationStub, 'add')
@@ -71,5 +73,14 @@ describe('AddNation Controller', () => {
       code: 'valid_code',
       name: 'valid_name'
     })
+  })
+
+  test('Should return 500 if AddAcount throws', async () => {
+    const { sut, addNationStub } = makeSut()
+    jest.spyOn(addNationStub, 'add').mockImplementationOnce(async () => {
+      return new Promise((resolve, reject) => reject(new Error()))
+    })
+    const httpResponse = await sut.handle(makeFakeRequest())
+    expect(httpResponse).toEqual(serverError(new ServerError(null)))
   })
 })
