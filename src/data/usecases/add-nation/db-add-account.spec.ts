@@ -1,0 +1,49 @@
+import { NationModel } from '../../../domain/models/nation'
+import { AddNationModel } from '../../../domain/usecases/add-nation'
+import { AddNationRepository } from '../../protocols/add-account-repository'
+import { DbAddNation } from './db-add-nation'
+
+const makeAddNationRepository = (): AddNationRepository => {
+  class AddNationRepositoryStub implements AddNationRepository {
+    async add (nationData: AddNationModel): Promise<NationModel> {
+      return new Promise(resolve => resolve(makeFakeNation()))
+    }
+  }
+  return new AddNationRepositoryStub()
+}
+
+const makeFakeNation = (): NationModel => ({
+  code: 'valid_code',
+  name: 'valid_name'
+})
+
+const makeFakeNationData = (): AddNationModel => ({
+  code: 'valid_code',
+  name: 'valid_name'
+})
+
+interface SutTypes {
+  sut: DbAddNation
+  addNationRepositoryStub: AddNationRepository
+}
+
+const makeSut = (): SutTypes => {
+  const addNationRepositoryStub = makeAddNationRepository()
+  const sut = new DbAddNation(addNationRepositoryStub)
+  return {
+    sut,
+    addNationRepositoryStub
+  }
+}
+
+describe('DbNationAccount Usecase', () => {
+  test('Should call AddAccountRepository with correct values', async () => {
+    const { sut, addNationRepositoryStub } = makeSut()
+    const addSpy = jest.spyOn(addNationRepositoryStub, 'add')
+    await sut.add(makeFakeNationData())
+    expect(addSpy).toHaveBeenCalledWith({
+      code: 'valid_code',
+      name: 'valid_name'
+    })
+  })
+})
