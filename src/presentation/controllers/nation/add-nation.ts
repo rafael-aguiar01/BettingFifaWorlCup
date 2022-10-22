@@ -1,8 +1,7 @@
-import { HttpResponse, HttpRequest } from '../../protocols/http'
+import { HttpResponse, HttpRequest, Controller } from '../../protocols/'
 import { MissingParamError } from '../../errors'
 import { badRequest, ok, serverError } from '../../helpers/http-helper'
 import { AddNation } from '../../../domain/usecases/add-nation'
-import { Controller } from '../../protocols/controller'
 
 export class AddNationController implements Controller {
   private readonly addNation: AddNation

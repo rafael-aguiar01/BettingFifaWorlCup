@@ -3,7 +3,7 @@ import { MissingParamError, ServerError } from '../../errors'
 import { badRequest, serverError } from '../../helpers/http-helper'
 import { NationModel } from '../../../domain/models/nation'
 import { AddNationModel, AddNation } from '../../../domain/usecases/add-nation'
-import { HttpRequest } from '../../protocols/http'
+import { HttpRequest } from '../../protocols'
 
 const makeFakeNation = (): NationModel => ({
   code: 'valid_code',
