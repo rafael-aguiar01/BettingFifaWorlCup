@@ -1,6 +1,6 @@
 import { NationModel } from '../../../domain/models/nation'
 import { AddNationModel } from '../../../domain/usecases/add-nation'
-import { AddNationRepository } from '../../protocols/add-account-repository'
+import { AddNationRepository } from '../../protocols/add-nation-repository'
 import { DbAddNation } from './db-add-nation'
 
 const makeAddNationRepository = (): AddNationRepository => {

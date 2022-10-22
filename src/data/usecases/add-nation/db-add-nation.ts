@@ -1,6 +1,6 @@
 import { NationModel } from '../../../domain/models/nation'
 import { AddNation, AddNationModel } from '../../../domain/usecases/add-nation'
-import { AddNationRepository } from '../../protocols/add-account-repository'
+import { AddNationRepository } from '../../protocols/add-nation-repository'
 
 export class DbAddNation implements AddNation {
   private readonly addNationRepository: AddNationRepository
