@@ -6,5 +6,5 @@ export interface AddNationModel {
 }
 
 export interface AddNation {
-  add (account: AddNationModel): Promise<NationModel>
+  add (nation: AddNationModel): Promise<NationModel>
 }
