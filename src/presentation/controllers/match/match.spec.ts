@@ -3,7 +3,7 @@ import { AddMatchController } from './match'
 // import { badRequest, serverError } from '../../helpers/http-helper'
 import { MatchModel } from '../../../domain/models/match'
 import { HttpRequest } from '../../protocols'
-import { AddMatch, AddMatchModel } from '../../../domain/usecases/add-matches'
+import { AddMatch, AddMatchModel } from '../../../domain/usecases/add-match'
 
 const makeFakeMatch = (): MatchModel => ({
   code: 'valid_code',

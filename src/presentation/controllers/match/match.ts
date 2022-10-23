@@ -1,7 +1,7 @@
-import { HttpResponse, HttpRequest, Controller } from '../../protocols/'
+import { HttpResponse, HttpRequest, Controller } from '../../protocols'
 import { MissingParamError } from '../../errors'
 import { badRequest, ok, serverError } from '../../helpers/http-helper'
-import { AddMatch } from '../../../domain/usecases/add-matches'
+import { AddMatch } from '../../../domain/usecases/add-match'
 
 export class AddMatchController implements Controller {
   private readonly addMatch: AddMatch
