@@ -1,4 +1,4 @@
-import { AddMatchController } from './matches'
+import { AddMatchController } from './match'
 // import { MissingParamError, ServerError } from '../../errors'
 // import { badRequest, serverError } from '../../helpers/http-helper'
 import { MatchModel } from '../../../domain/models/match'
