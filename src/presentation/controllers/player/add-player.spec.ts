@@ -5,25 +5,17 @@ import { AddPlayer, AddPlayerModel } from '../../../domain/usecases/add-player'
 
 const makeFakePlayer = (): PlayerModel => ({
   name: 'valid_name',
-  cellphone: 'valid_number',
-  match: 'valid_match',
-  teamA: 'valid_teamA',
-  scoreTeamA: 123,
-  teamB: 'valid_teamB',
-  scoreTeamB: 123,
-  winner: 'valid_team'
+  cellphone: 'cellphone_number',
+  matches: {},
+  position: {}
 })
 
 const makeFakeRequest = (): HttpRequest => ({
   body: ({
     name: 'valid_name',
-    cellphone: 'valid_number',
-    match: 'valid_match',
-    teamA: 'valid_teamA',
-    scoreTeamA: 123,
-    teamB: 'valid_teamB',
-    scoreTeamB: 123,
-    winner: 'valid_team'
+    cellphone: 'cellphone_number',
+    matches: {},
+    position: {}
   })
 })
 
@@ -57,13 +49,9 @@ describe('AddPlayer Controller', () => {
     await sut.handle(makeFakeRequest())
     expect(addSpy).toHaveBeenCalledWith({
       name: 'valid_name',
-      cellphone: 'valid_number',
-      match: 'valid_match',
-      teamA: 'valid_teamA',
-      scoreTeamA: 123,
-      teamB: 'valid_teamB',
-      scoreTeamB: 123,
-      winner: 'valid_team'
+      cellphone: 'cellphone_number',
+      matches: {},
+      position: {}
     })
   })
 })

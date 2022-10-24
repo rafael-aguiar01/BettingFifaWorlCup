@@ -15,12 +15,8 @@ export class AddPlayerController implements Controller {
       const requiredFields = [
         'name',
         'cellphone',
-        'match',
-        'teamA',
-        'scoreTeamA',
-        'teamB',
-        'scoreTeamB',
-        'winner'
+        'matches',
+        'position'
       ]
       for (const field of requiredFields) {
         if (!httpRequest.body[field]) {
@@ -30,24 +26,16 @@ export class AddPlayerController implements Controller {
       const {
         name,
         cellphone,
-        match,
-        teamA,
-        scoreTeamA,
-        teamB,
-        scoreTeamB,
-        winner
+        matches,
+        position
       } = httpRequest.body
-      const nation = await this.addPlayer.add({
+      const player = await this.addPlayer.add({
         name,
         cellphone,
-        match,
-        teamA,
-        scoreTeamA,
-        teamB,
-        scoreTeamB,
-        winner
+        matches,
+        position
       })
-      return ok(nation)
+      return ok(player)
     } catch (error) {
       return serverError(error)
     }

@@ -3,12 +3,8 @@ import { PlayerModel } from '../models/player'
 export interface AddPlayerModel {
   name: string
   cellphone: string
-  match: string
-  teamA: string
-  scoreTeamA: number
-  teamB: string
-  scoreTeamB: number
-  winner: string
+  matches: object
+  position: object
 }
 
 export interface AddPlayer {
