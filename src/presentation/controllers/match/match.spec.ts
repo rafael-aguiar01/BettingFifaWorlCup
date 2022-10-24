@@ -1,6 +1,6 @@
 import { AddMatchController } from './match'
-// import { MissingParamError, ServerError } from '../../errors'
-// import { badRequest, serverError } from '../../helpers/http-helper'
+import { MissingParamError } from '../../errors'
+import { badRequest } from '../../helpers/http-helper'
 import { MatchModel } from '../../../domain/models/match'
 import { HttpRequest } from '../../protocols'
 import { AddMatch, AddMatchModel } from '../../../domain/usecases/add-match'
@@ -49,6 +49,22 @@ const makeSut = (): SutTypes => {
 }
 
 describe('AddMatch Controller', () => {
+  test('Should return 400 if no code is provided', async () => {
+    const { sut } = makeSut()
+    const httpRequest = {
+      body: {
+        teamA: 'valid_teamA',
+        scoreTeamA: 1,
+        teamB: 'valid_teamB',
+        scoreTeamB: 2,
+        winner: 'valid_winner'
+      }
+    }
+    const httpResponse = await sut.handle(httpRequest)
+    expect(httpResponse.statusCode).toBe(400)
+    expect(httpResponse).toEqual(badRequest(new MissingParamError('code')))
+  })
+
   test('Should call AddMatch with correct values', async () => {
     const { sut, addMatchStub } = makeSut()
     const addSpy = jest.spyOn(addMatchStub, 'add')

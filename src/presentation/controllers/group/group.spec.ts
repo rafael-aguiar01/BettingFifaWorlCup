@@ -1,10 +1,9 @@
 import { AddGroupController } from './group'
-import { MissingParamError } from '../../errors'
-// import { badRequest, serverError } from '../../helpers/http-helper'
+import { MissingParamError, ServerError } from '../../errors'
+import { badRequest, serverError } from '../../helpers/http-helper'
 import { GroupModel } from '../../../domain/models/group'
 import { HttpRequest } from '../../protocols'
 import { AddGroup, AddGroupModel } from '../../../domain/usecases/add-group'
-import { badRequest } from '../../helpers/http-helper'
 
 const makeFakeGroup = (): GroupModel => ({
   code: 'valid_code',
@@ -123,7 +122,7 @@ describe('AddMatch Controller', () => {
     expect(httpResponse).toEqual(badRequest(new MissingParamError('teamD')))
   })
 
-  test('Should call AddMatch with correct values', async () => {
+  test('Should call AddGroup with correct values', async () => {
     const { sut, addGroupStub } = makeSut()
     const addSpy = jest.spyOn(addGroupStub, 'add')
     await sut.handle(makeFakeRequest())
@@ -134,5 +133,14 @@ describe('AddMatch Controller', () => {
       teamC: 'valid_teamC',
       teamD: 'valid_teamD'
     })
+  })
+
+  test('Should return 500 if AddAcount throws', async () => {
+    const { sut, addGroupStub } = makeSut()
+    jest.spyOn(addGroupStub, 'add').mockImplementationOnce(async () => {
+      return new Promise((resolve, reject) => reject(new Error()))
+    })
+    const httpResponse = await sut.handle(makeFakeRequest())
+    expect(httpResponse).toEqual(serverError(new ServerError(null)))
   })
 })
