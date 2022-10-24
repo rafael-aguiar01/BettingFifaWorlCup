@@ -59,6 +59,20 @@ describe('AddPlayer Controller', () => {
     expect(httpResponse).toEqual(badRequest(new MissingParamError('name')))
   })
 
+  test('Should return 400 if no cellphone is provided', async () => {
+    const { sut } = makeSut()
+    const httpRequest = {
+      body: {
+        name: 'valid_name',
+        matches: {},
+        position: {}
+      }
+    }
+    const httpResponse = await sut.handle(httpRequest)
+    expect(httpResponse.statusCode).toBe(400)
+    expect(httpResponse).toEqual(badRequest(new MissingParamError('cellphone')))
+  })
+
   test('Should call AddPlayer with correct values', async () => {
     const { sut, addPlayerStub } = makeSut()
     const addSpy = jest.spyOn(addPlayerStub, 'add')
