@@ -92,6 +92,21 @@ describe('AddPosition Controller', () => {
     expect(httpResponse).toEqual(badRequest(new MissingParamError('second')))
   })
 
+  test('Should return 400 if no third is provided', async () => {
+    const { sut } = makeSut()
+    const httpRequest = {
+      body: {
+        code: 'valid_code',
+        first: 'valid_first',
+        second: 'valid_second',
+        fourth: 'valid_fourth'
+      }
+    }
+    const httpResponse = await sut.handle(httpRequest)
+    expect(httpResponse.statusCode).toBe(400)
+    expect(httpResponse).toEqual(badRequest(new MissingParamError('third')))
+  })
+
   test('Should call AddPosition with correct values', async () => {
     const { sut, addPositionStub } = makeSut()
     const addSpy = jest.spyOn(addPositionStub, 'add')
