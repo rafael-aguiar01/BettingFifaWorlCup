@@ -48,7 +48,7 @@ const makeSut = (): SutTypes => {
 }
 
 describe('AddMatch Controller', () => {
-  test('Should return 400 if no valid_code is provided', async () => {
+  test('Should return 400 if no code is provided', async () => {
     const { sut } = makeSut()
     const httpRequest = {
       body: {
@@ -61,6 +61,21 @@ describe('AddMatch Controller', () => {
     const httpResponse = await sut.handle(httpRequest)
     expect(httpResponse.statusCode).toBe(400)
     expect(httpResponse).toEqual(badRequest(new MissingParamError('code')))
+  })
+
+  test('Should return 400 if no teamA is provided', async () => {
+    const { sut } = makeSut()
+    const httpRequest = {
+      body: {
+        code: 'valid_code',
+        teamB: 'valid_teamB',
+        teamC: 'valid_teamC',
+        teamD: 'valid_teamD'
+      }
+    }
+    const httpResponse = await sut.handle(httpRequest)
+    expect(httpResponse.statusCode).toBe(400)
+    expect(httpResponse).toEqual(badRequest(new MissingParamError('teamA')))
   })
 
   test('Should call AddMatch with correct values', async () => {
