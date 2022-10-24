@@ -1,6 +1,6 @@
 import { AddMatchController } from './match'
-import { MissingParamError } from '../../errors'
-import { badRequest } from '../../helpers/http-helper'
+import { MissingParamError, ServerError } from '../../errors'
+import { badRequest, serverError } from '../../helpers/http-helper'
 import { MatchModel } from '../../../domain/models/match'
 import { HttpRequest } from '../../protocols'
 import { AddMatch, AddMatchModel } from '../../../domain/usecases/add-match'
@@ -143,6 +143,15 @@ describe('AddMatch Controller', () => {
     const httpResponse = await sut.handle(httpRequest)
     expect(httpResponse.statusCode).toBe(400)
     expect(httpResponse).toEqual(badRequest(new MissingParamError('winner')))
+  })
+
+  test('Should return 500 if Addmatch throws', async () => {
+    const { sut, addMatchStub } = makeSut()
+    jest.spyOn(addMatchStub, 'add').mockImplementationOnce(async () => {
+      return new Promise((resolve, reject) => reject(new Error()))
+    })
+    const httpResponse = await sut.handle(makeFakeRequest())
+    expect(httpResponse).toEqual(serverError(new ServerError(null)))
   })
 
   test('Should call AddMatch with correct values', async () => {
