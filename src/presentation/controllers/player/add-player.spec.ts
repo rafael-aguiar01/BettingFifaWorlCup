@@ -1,4 +1,6 @@
 import { AddPlayerController } from './add-player'
+import { MissingParamError } from '../../errors'
+import { badRequest } from '../../helpers/http-helper'
 import { PlayerModel } from '../../../domain/models/player'
 import { HttpRequest } from '../../protocols'
 import { AddPlayer, AddPlayerModel } from '../../../domain/usecases/add-player'
@@ -43,6 +45,20 @@ const makeSut = (): SutTypes => {
 }
 
 describe('AddPlayer Controller', () => {
+  test('Should return 400 if no name is provided', async () => {
+    const { sut } = makeSut()
+    const httpRequest = {
+      body: {
+        cellphone: 'cellphone_number',
+        matches: {},
+        position: {}
+      }
+    }
+    const httpResponse = await sut.handle(httpRequest)
+    expect(httpResponse.statusCode).toBe(400)
+    expect(httpResponse).toEqual(badRequest(new MissingParamError('name')))
+  })
+
   test('Should call AddPlayer with correct values', async () => {
     const { sut, addPlayerStub } = makeSut()
     const addSpy = jest.spyOn(addPlayerStub, 'add')
