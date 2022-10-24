@@ -1,6 +1,6 @@
 import { AddPositionController } from './add-position'
-import { MissingParamError } from '../../errors'
-import { badRequest } from '../../helpers/http-helper'
+import { MissingParamError, ServerError } from '../../errors'
+import { badRequest, serverError } from '../../helpers/http-helper'
 import { PositionModel } from '../../../domain/models/position'
 import { HttpRequest } from '../../protocols'
 import { AddPosition, AddPositionModel } from '../../../domain/usecases/add-position'
@@ -105,6 +105,30 @@ describe('AddPosition Controller', () => {
     const httpResponse = await sut.handle(httpRequest)
     expect(httpResponse.statusCode).toBe(400)
     expect(httpResponse).toEqual(badRequest(new MissingParamError('third')))
+  })
+
+  test('Should return 400 if no fourth is provided', async () => {
+    const { sut } = makeSut()
+    const httpRequest = {
+      body: {
+        code: 'valid_code',
+        first: 'valid_first',
+        second: 'valid_second',
+        third: 'valid_third'
+      }
+    }
+    const httpResponse = await sut.handle(httpRequest)
+    expect(httpResponse.statusCode).toBe(400)
+    expect(httpResponse).toEqual(badRequest(new MissingParamError('fourth')))
+  })
+
+  test('Should return 500 if AddAcount throws', async () => {
+    const { sut, addPositionStub } = makeSut()
+    jest.spyOn(addPositionStub, 'add').mockImplementationOnce(async () => {
+      return new Promise((resolve, reject) => reject(new Error()))
+    })
+    const httpResponse = await sut.handle(makeFakeRequest())
+    expect(httpResponse).toEqual(serverError(new ServerError(null)))
   })
 
   test('Should call AddPosition with correct values', async () => {
