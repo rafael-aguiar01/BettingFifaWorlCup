@@ -113,6 +113,38 @@ describe('AddMatch Controller', () => {
     expect(httpResponse).toEqual(badRequest(new MissingParamError('teamB')))
   })
 
+  test('Should return 400 if no scoreTeamB is provided', async () => {
+    const { sut } = makeSut()
+    const httpRequest = {
+      body: {
+        code: 'valid_code',
+        teamA: 'valid_teamA',
+        scoreTeamA: 1,
+        teamB: 'valid_teamB',
+        winner: 'valid_winner'
+      }
+    }
+    const httpResponse = await sut.handle(httpRequest)
+    expect(httpResponse.statusCode).toBe(400)
+    expect(httpResponse).toEqual(badRequest(new MissingParamError('scoreTeamB')))
+  })
+
+  test('Should return 400 if no winner is provided', async () => {
+    const { sut } = makeSut()
+    const httpRequest = {
+      body: {
+        code: 'valid_code',
+        teamA: 'valid_teamA',
+        scoreTeamA: 1,
+        teamB: 'valid_teamB',
+        scoreTeamB: 2
+      }
+    }
+    const httpResponse = await sut.handle(httpRequest)
+    expect(httpResponse.statusCode).toBe(400)
+    expect(httpResponse).toEqual(badRequest(new MissingParamError('winner')))
+  })
+
   test('Should call AddMatch with correct values', async () => {
     const { sut, addMatchStub } = makeSut()
     const addSpy = jest.spyOn(addMatchStub, 'add')
