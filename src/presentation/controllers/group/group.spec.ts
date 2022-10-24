@@ -1,9 +1,10 @@
 import { AddGroupController } from './group'
-// import { MissingParamError, ServerError } from '../../errors'
+import { MissingParamError } from '../../errors'
 // import { badRequest, serverError } from '../../helpers/http-helper'
 import { GroupModel } from '../../../domain/models/group'
 import { HttpRequest } from '../../protocols'
 import { AddGroup, AddGroupModel } from '../../../domain/usecases/add-group'
+import { badRequest } from '../../helpers/http-helper'
 
 const makeFakeGroup = (): GroupModel => ({
   code: 'valid_code',
@@ -47,6 +48,21 @@ const makeSut = (): SutTypes => {
 }
 
 describe('AddMatch Controller', () => {
+  test('Should return 400 if no valid_code is provided', async () => {
+    const { sut } = makeSut()
+    const httpRequest = {
+      body: {
+        teamA: 'valid_teamA',
+        teamB: 'valid_teamB',
+        teamC: 'valid_teamC',
+        teamD: 'valid_teamD'
+      }
+    }
+    const httpResponse = await sut.handle(httpRequest)
+    expect(httpResponse.statusCode).toBe(400)
+    expect(httpResponse).toEqual(badRequest(new MissingParamError('code')))
+  })
+
   test('Should call AddMatch with correct values', async () => {
     const { sut, addGroupStub } = makeSut()
     const addSpy = jest.spyOn(addGroupStub, 'add')
