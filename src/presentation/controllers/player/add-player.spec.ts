@@ -1,6 +1,6 @@
 import { AddPlayerController } from './add-player'
-import { MissingParamError } from '../../errors'
-import { badRequest } from '../../helpers/http-helper'
+import { MissingParamError, ServerError } from '../../errors'
+import { badRequest, serverError } from '../../helpers/http-helper'
 import { PlayerModel } from '../../../domain/models/player'
 import { HttpRequest } from '../../protocols'
 import { AddPlayer, AddPlayerModel } from '../../../domain/usecases/add-player'
@@ -111,5 +111,14 @@ describe('AddPlayer Controller', () => {
       matches: {},
       position: {}
     })
+  })
+
+  test('Should return 500 if AddAcount throws', async () => {
+    const { sut, addPlayerStub } = makeSut()
+    jest.spyOn(addPlayerStub, 'add').mockImplementationOnce(async () => {
+      return new Promise((resolve, reject) => reject(new Error()))
+    })
+    const httpResponse = await sut.handle(makeFakeRequest())
+    expect(httpResponse).toEqual(serverError(new ServerError(null)))
   })
 })
