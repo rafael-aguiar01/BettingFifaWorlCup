@@ -1,4 +1,6 @@
 import { AddPositionController } from './add-position'
+import { MissingParamError } from '../../errors'
+import { badRequest } from '../../helpers/http-helper'
 import { PositionModel } from '../../../domain/models/position'
 import { HttpRequest } from '../../protocols'
 import { AddPosition, AddPositionModel } from '../../../domain/usecases/add-position'
@@ -45,6 +47,36 @@ const makeSut = (): SutTypes => {
 }
 
 describe('AddPosition Controller', () => {
+  test('Should return 400 if no code is provided', async () => {
+    const { sut } = makeSut()
+    const httpRequest = {
+      body: {
+        first: 'valid_first',
+        second: 'valid_second',
+        third: 'valid_third',
+        fourth: 'valid_fourth'
+      }
+    }
+    const httpResponse = await sut.handle(httpRequest)
+    expect(httpResponse.statusCode).toBe(400)
+    expect(httpResponse).toEqual(badRequest(new MissingParamError('code')))
+  })
+
+  test('Should return 400 if no first is provided', async () => {
+    const { sut } = makeSut()
+    const httpRequest = {
+      body: {
+        code: 'valid_code',
+        second: 'valid_second',
+        third: 'valid_third',
+        fourth: 'valid_fourth'
+      }
+    }
+    const httpResponse = await sut.handle(httpRequest)
+    expect(httpResponse.statusCode).toBe(400)
+    expect(httpResponse).toEqual(badRequest(new MissingParamError('first')))
+  })
+
   test('Should call AddPosition with correct values', async () => {
     const { sut, addPositionStub } = makeSut()
     const addSpy = jest.spyOn(addPositionStub, 'add')
