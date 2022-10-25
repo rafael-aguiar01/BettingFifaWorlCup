@@ -65,4 +65,10 @@ describe('DbAddMatch Usecase', () => {
     const promise = sut.add(makeFakeMatchData())
     await expect(promise).rejects.toThrow()
   })
+
+  test('Should return an match on success', async () => {
+    const { sut } = makeSut()
+    const account = await sut.add(makeFakeMatchData())
+    expect(account).toEqual(makeFakeMatch())
+  })
 })
