@@ -18,7 +18,7 @@ const makeFakeGroup = (): GroupModel => ({
   teamD: 'valid_teamD'
 })
 
-const makeFakeNationData = (): AddGroupModel => ({
+const makeFakeGroupData = (): AddGroupModel => ({
   code: 'valid_code',
   teamA: 'valid_teamA',
   teamB: 'valid_teamB',
@@ -44,7 +44,7 @@ describe('DbAddGroup Usecase', () => {
   test('Should call AddGroupRepository with correct values', async () => {
     const { sut, addGroupRepositoryStub } = makeSut()
     const addSpy = jest.spyOn(addGroupRepositoryStub, 'add')
-    await sut.add(makeFakeNationData())
+    await sut.add(makeFakeGroupData())
     expect(addSpy).toHaveBeenCalledWith({
       code: 'valid_code',
       teamA: 'valid_teamA',
@@ -52,5 +52,12 @@ describe('DbAddGroup Usecase', () => {
       teamC: 'valid_teamC',
       teamD: 'valid_teamD'
     })
+  })
+
+  test('Should throw if AddGroupRepository throws', async () => {
+    const { sut, addGroupRepositoryStub } = makeSut()
+    jest.spyOn(addGroupRepositoryStub, 'add').mockResolvedValueOnce(new Promise((resolve, reject) => reject(new Error())))
+    const promise = sut.add(makeFakeGroupData())
+    await expect(promise).rejects.toThrow()
   })
 })
