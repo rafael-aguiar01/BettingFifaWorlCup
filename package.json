@@ -5,7 +5,8 @@
   "main": "index.js",
   "scripts": {
     "start": "sucrase-node src/main/server.ts",
-    "test": "jest --passWithNoTests"
+    "test": "jest --passWithNoTests",
+    "test:integration": "npm test -- --watch -c jest-integration-config.js"
   },
   "repository": {
     "type": "git",
