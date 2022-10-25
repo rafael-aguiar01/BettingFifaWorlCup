@@ -1,6 +1,4 @@
-import { PlayerModel } from '../../../domain/models/player'
-import { AddPlayerModel, AddPlayer } from '../../../domain/usecases/add-player'
-import { AddPlayerRepository } from '../../protocols/add-player-repository'
+import { PlayerModel, AddPlayerModel, AddPlayer, AddPlayerRepository } from './db-add-player-protocols'
 
 export class DbAddPlayer implements AddPlayer {
   private readonly addPlayerRepository: AddPlayerRepository

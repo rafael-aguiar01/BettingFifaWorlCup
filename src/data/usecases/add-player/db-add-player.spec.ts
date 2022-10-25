@@ -1,6 +1,4 @@
-import { PlayerModel } from '../../../domain/models/player'
-import { AddPlayerModel } from '../../../domain/usecases/add-player'
-import { AddPlayerRepository } from '../../protocols/add-player-repository'
+import { PlayerModel, AddPlayerModel, AddPlayerRepository } from './db-add-player-protocols'
 import { DbAddPlayer } from './db-add-player'
 
 const makeAddPlayerRepository = (): AddPlayerRepository => {
