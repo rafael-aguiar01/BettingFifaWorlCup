@@ -59,4 +59,10 @@ describe('DbAddPlayer Usecase', () => {
     const promise = sut.add(makeFakePlayerData())
     await expect(promise).rejects.toThrow()
   })
+
+  test('Should return an player on success', async () => {
+    const { sut } = makeSut()
+    const account = await sut.add(makeFakePlayerData())
+    expect(account).toEqual(makeFakePlayer())
+  })
 })
