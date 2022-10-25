@@ -1,6 +1,4 @@
-import { GroupModel } from '../../../domain/models/group'
-import { AddGroupModel } from '../../../domain/usecases/add-group'
-import { AddGroupRepository } from '../../protocols/add-group-repository'
+import { GroupModel, AddGroupModel, AddGroupRepository } from './db-add-group-protocols'
 import { DbAddGroup } from './db-add-group'
 
 const makeAddGroupRepository = (): AddGroupRepository => {

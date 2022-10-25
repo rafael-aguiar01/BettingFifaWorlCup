@@ -1,6 +1,4 @@
-import { GroupModel } from '../../../domain/models/group'
-import { AddGroupModel, AddGroup } from '../../../domain/usecases/add-group'
-import { AddGroupRepository } from '../../protocols/add-group-repository'
+import { GroupModel, AddGroupModel, AddGroup, AddGroupRepository } from './db-add-group-protocols'
 
 export class DbAddGroup implements AddGroup {
   private readonly addGroupRepository: AddGroupRepository
