@@ -55,4 +55,11 @@ describe('DbAddPosition Usecase', () => {
       fourth: 'valid_fourth'
     })
   })
+
+  test('Should throw if AddPositionRepository throws', async () => {
+    const { sut, addPositionRepositoryStub } = makeSut()
+    jest.spyOn(addPositionRepositoryStub, 'add').mockResolvedValueOnce(new Promise((resolve, reject) => reject(new Error())))
+    const promise = sut.add(makeFakePlayerData())
+    await expect(promise).rejects.toThrow()
+  })
 })
