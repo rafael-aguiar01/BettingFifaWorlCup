@@ -1,6 +1,4 @@
-import { PositionModel } from '../../../domain/models/position'
-import { AddPositionModel, AddPosition } from '../../../domain/usecases/add-position'
-import { AddPositionRepository } from '../../protocols/add-position-repository'
+import { PositionModel, AddPositionModel, AddPosition, AddPositionRepository } from './db-add-position-protocols'
 
 export class DbAddPosition implements AddPosition {
   private readonly addPositionRepository: AddPositionRepository
