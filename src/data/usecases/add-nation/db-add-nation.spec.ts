@@ -51,4 +51,10 @@ describe('DbAddNation Usecase', () => {
     const promise = sut.add(makeFakeNationData())
     await expect(promise).rejects.toThrow()
   })
+
+  test('Should return an nation on success', async () => {
+    const { sut } = makeSut()
+    const account = await sut.add(makeFakeNationData())
+    expect(account).toEqual(makeFakeNation())
+  })
 })
