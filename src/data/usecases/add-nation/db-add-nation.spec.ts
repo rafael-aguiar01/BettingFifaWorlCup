@@ -44,4 +44,11 @@ describe('DbAddNation Usecase', () => {
       name: 'valid_name'
     })
   })
+
+  test('Should throw if AddNationRepository throws', async () => {
+    const { sut, addNationRepositoryStub } = makeSut()
+    jest.spyOn(addNationRepositoryStub, 'add').mockResolvedValueOnce(new Promise((resolve, reject) => reject(new Error())))
+    const promise = sut.add(makeFakeNationData())
+    await expect(promise).rejects.toThrow()
+  })
 })
