@@ -41,7 +41,7 @@ const makeSut = (): SutTypes => {
 }
 
 describe('DbAddPlayer Usecase', () => {
-  test('Should call AddAccountRepository with correct values', async () => {
+  test('Should call AddPlayerRepository with correct values', async () => {
     const { sut, addPlayerRepositoryStub } = makeSut()
     const addSpy = jest.spyOn(addPlayerRepositoryStub, 'add')
     await sut.add(makeFakePlayerData())
@@ -51,5 +51,12 @@ describe('DbAddPlayer Usecase', () => {
       matches: {},
       position: {}
     })
+  })
+
+  test('Should throw if AddPlayerRepository throws', async () => {
+    const { sut, addPlayerRepositoryStub } = makeSut()
+    jest.spyOn(addPlayerRepositoryStub, 'add').mockResolvedValueOnce(new Promise((resolve, reject) => reject(new Error())))
+    const promise = sut.add(makeFakePlayerData())
+    await expect(promise).rejects.toThrow()
   })
 })
