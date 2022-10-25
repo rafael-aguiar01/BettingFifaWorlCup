@@ -34,7 +34,7 @@ const makeSut = (): SutTypes => {
   }
 }
 
-describe('DbNationAccount Usecase', () => {
+describe('DbAddNation Usecase', () => {
   test('Should call AddAccountRepository with correct values', async () => {
     const { sut, addNationRepositoryStub } = makeSut()
     const addSpy = jest.spyOn(addNationRepositoryStub, 'add')
