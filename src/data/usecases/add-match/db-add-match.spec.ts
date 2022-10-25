@@ -58,4 +58,11 @@ describe('DbAddMatch Usecase', () => {
       winner: 'valid_team'
     })
   })
+
+  test('Should throw if AddNationRepository throws', async () => {
+    const { sut, addMatchRepositoryStub } = makeSut()
+    jest.spyOn(addMatchRepositoryStub, 'add').mockResolvedValueOnce(new Promise((resolve, reject) => reject(new Error())))
+    const promise = sut.add(makeFakeMatchData())
+    await expect(promise).rejects.toThrow()
+  })
 })
