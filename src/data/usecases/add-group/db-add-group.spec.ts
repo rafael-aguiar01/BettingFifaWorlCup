@@ -60,4 +60,10 @@ describe('DbAddGroup Usecase', () => {
     const promise = sut.add(makeFakeGroupData())
     await expect(promise).rejects.toThrow()
   })
+
+  test('Should return an group on success', async () => {
+    const { sut } = makeSut()
+    const account = await sut.add(makeFakeGroupData())
+    expect(account).toEqual(makeFakeGroup())
+  })
 })
