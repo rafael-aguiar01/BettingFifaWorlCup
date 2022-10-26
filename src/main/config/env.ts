@@ -1,4 +1,4 @@
 export default {
-  mongoUrl: process.env.MONGO_URL || 'mongodb://localhost:27017/surveysapi',
+  mongoUrl: process.env.MONGO_URL || 'mongodb://localhost:27017/bettingfifaworldcup',
   port: process.env.PORT || 5050
 }
