@@ -2,7 +2,7 @@ import request from 'supertest'
 import app from '../config/app'
 import { MongoHelper } from '../../infra/db/mongodb/helpers/mongo-helper'
 
-describe('Nation Routes', () => {
+describe('Group Routes', () => {
   beforeAll(async () => {
     await MongoHelper.connect(process.env.MONGO_URL)
   })
@@ -12,16 +12,19 @@ describe('Nation Routes', () => {
   })
 
   beforeEach(async () => {
-    const accountCollection = await MongoHelper.getCollection('nations')
+    const accountCollection = await MongoHelper.getCollection('groups')
     await accountCollection.deleteMany({})
   })
 
-  test('Should return an nation on success', async () => {
+  test('Should return an group on success', async () => {
     await request(app)
-      .post('/api/nation')
+      .post('/api/group')
       .send({
-        code: 'BRA',
-        name: 'BRASIL'
+        code: 'valid_code',
+        teamA: 'valid_teamA',
+        teamB: 'valid_teamB',
+        teamC: 'valid_teamC',
+        teamD: 'valid_teamD'
       })
       .expect(200)
   })
