@@ -1,6 +1,6 @@
 import { AddPointController } from './add-point'
-import { MissingParamError } from '../../errors'
-import { badRequest } from '../../helpers/http-helper'
+import { MissingParamError, ServerError } from '../../errors'
+import { badRequest, serverError } from '../../helpers/http-helper'
 import { PointModel } from '../../../domain/models/point'
 import { HttpRequest } from '../../protocols'
 import { AddPoint, AddPointModel } from '../../../domain/usecases/add-point'
@@ -73,5 +73,14 @@ describe('AddPoint Controller', () => {
       code: 'valid_code',
       point: 2
     })
+  })
+
+  test('Should return 500 if AddPoint throws', async () => {
+    const { sut, addPointStub } = makeSut()
+    jest.spyOn(addPointStub, 'add').mockImplementationOnce(async () => {
+      return new Promise((resolve, reject) => reject(new Error()))
+    })
+    const httpResponse = await sut.handle(makeFakeRequest())
+    expect(httpResponse).toEqual(serverError(new ServerError(null)))
   })
 })
