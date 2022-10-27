@@ -53,4 +53,10 @@ describe('DbAddPoint Usecase', () => {
     const promise = sut.add(makeFakePointData())
     await expect(promise).rejects.toThrow()
   })
+
+  test('Should return an point on success', async () => {
+    const { sut } = makeSut()
+    const point = await sut.add(makeFakePointData())
+    expect(point).toEqual(makeFakePoint())
+  })
 })
