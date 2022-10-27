@@ -17,7 +17,7 @@ const makeFakePoint = (): PointModel => ({
   point: 2
 })
 
-const makeFakePositionData = (): AddPointModel => ({
+const makeFakePointData = (): AddPointModel => ({
   code: 'valid_code',
   point: 2
 })
@@ -40,10 +40,17 @@ describe('DbAddPoint Usecase', () => {
   test('Should call AddPointRepository with correct values', async () => {
     const { sut, addPointRepositoryStub } = makeSut()
     const addSpy = jest.spyOn(addPointRepositoryStub, 'add')
-    await sut.add(makeFakePositionData())
+    await sut.add(makeFakePointData())
     expect(addSpy).toHaveBeenCalledWith({
       code: 'valid_code',
       point: 2
     })
+  })
+
+  test('Should throw if AddPointRepository throws', async () => {
+    const { sut, addPointRepositoryStub } = makeSut()
+    jest.spyOn(addPointRepositoryStub, 'add').mockResolvedValueOnce(new Promise((resolve, reject) => reject(new Error())))
+    const promise = sut.add(makeFakePointData())
+    await expect(promise).rejects.toThrow()
   })
 })
