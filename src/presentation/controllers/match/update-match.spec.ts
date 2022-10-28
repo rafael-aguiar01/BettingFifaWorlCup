@@ -47,4 +47,18 @@ describe('UpdateMatch Controller', () => {
     expect(httpResponse.statusCode).toBe(400)
     expect(httpResponse).toEqual(badRequest(new MissingParamError('code')))
   })
+
+  test('Should return 400 if no scoreTeamA is provided', async () => {
+    const { sut } = makeSut()
+    const httpRequest = {
+      body: {
+        code: 'valid_code',
+        scoreTeamB: 2,
+        winner: 'valid_winner'
+      }
+    }
+    const httpResponse = await sut.handle(httpRequest)
+    expect(httpResponse.statusCode).toBe(400)
+    expect(httpResponse).toEqual(badRequest(new MissingParamError('scoreTeamA')))
+  })
 })
