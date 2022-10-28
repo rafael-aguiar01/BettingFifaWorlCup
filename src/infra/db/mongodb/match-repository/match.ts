@@ -13,7 +13,11 @@ export class MatchMongoRepository implements AddMatchRepository {
 
   async update (matchData: UpdateMatchModel): Promise<MatchModel> {
     const matchCollection = await MongoHelper.getCollection('matches')
-    const result = await matchCollection.findOneAndUpdate({ code: matchData.code }, { scoreTeamA: matchData.scoreTeamA, scoreTeamB: matchData.scoreTeamB, winner: matchData.winner })
+    console.log(matchData)
+    const result = await matchCollection.findOneAndUpdate(
+      { code: matchData.code },
+      { $set: { scoreTeamA: matchData.scoreTeamA, scoreTeamB: matchData.scoreTeamB, winner: matchData.winner } }
+    )
     return MongoHelper.map(result.value)
   }
 }
