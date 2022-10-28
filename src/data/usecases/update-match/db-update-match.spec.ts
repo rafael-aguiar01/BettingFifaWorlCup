@@ -56,4 +56,17 @@ describe('DbUpdate Usecase', () => {
       winner: 'valid_winner'
     })
   })
+
+  test('Should throw if UpdateMatchRepository throws', async () => {
+    const { sut, updateMatchRepositoryStub } = makeSut()
+    jest.spyOn(updateMatchRepositoryStub, 'update').mockResolvedValueOnce(new Promise((resolve, reject) => reject(new Error())))
+    const promise = sut.update(makeFakeUpdateMatchData())
+    await expect(promise).rejects.toThrow()
+  })
+
+  test('Should return an match updated on success', async () => {
+    const { sut } = makeSut()
+    const account = await sut.update(makeFakeUpdateMatchData())
+    expect(account).toEqual(makeFakeMatch())
+  })
 })
