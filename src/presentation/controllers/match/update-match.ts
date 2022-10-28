@@ -12,16 +12,18 @@ export class UpdateMatchController implements Controller {
 
   async handle (httpRequest: HttpRequest): Promise<HttpResponse>{
     try {
-      const requiredFields = ['code', 'scoreTeamA', 'scoreTeamB', 'winner']
+      const requiredFields = ['code', 'teamA', 'scoreTeamA', 'teamB', 'scoreTeamB', 'winner']
       for (const field of requiredFields) {
         if (!httpRequest.body[field]) {
           return badRequest(new MissingParamError(field))
         }
       }
-      const { code, scoreTeamA, scoreTeamB, winner } = httpRequest.body
+      const { code, teamA, scoreTeamA, teamB, scoreTeamB, winner } = httpRequest.body
       const match = await this.updateMatch.update({
         code,
+        teamA,
         scoreTeamA,
+        teamB,
         scoreTeamB,
         winner
       })

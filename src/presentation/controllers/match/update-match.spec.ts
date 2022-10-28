@@ -6,7 +6,9 @@ import { HttpRequest } from '../../protocols'
 
 const makeFakeMatch = (): UpdateMatchModel => ({
   code: 'valid_code',
-  scoreTeamA: 2,
+  teamA: 'valid_teamA',
+  scoreTeamA: 1,
+  teamB: 'valid_teamB',
   scoreTeamB: 2,
   winner: 'valid_winner'
 })
@@ -14,7 +16,9 @@ const makeFakeMatch = (): UpdateMatchModel => ({
 const makeFakeRequest = (): HttpRequest => ({
   body: {
     code: 'valid_code',
+    teamA: 'valid_teamA',
     scoreTeamA: 1,
+    teamB: 'valid_teamB',
     scoreTeamB: 2,
     winner: 'valid_winner'
   }
@@ -48,7 +52,9 @@ describe('UpdateMatch Controller', () => {
     const { sut } = makeSut()
     const httpRequest = {
       body: {
-        scoreTeamA: 2,
+        teamA: 'valid_teamA',
+        scoreTeamA: 1,
+        teamB: 'valid_teamB',
         scoreTeamB: 2,
         winner: 'valid_winner'
       }
@@ -63,6 +69,8 @@ describe('UpdateMatch Controller', () => {
     const httpRequest = {
       body: {
         code: 'valid_code',
+        teamA: 'valid_teamA',
+        teamB: 'valid_teamB',
         scoreTeamB: 2,
         winner: 'valid_winner'
       }
@@ -77,7 +85,9 @@ describe('UpdateMatch Controller', () => {
     const httpRequest = {
       body: {
         code: 'valid_code',
-        scoreTeamA: 2,
+        teamA: 'valid_teamA',
+        scoreTeamA: 1,
+        teamB: 'valid_teamB',
         winner: 'valid_winner'
       }
     }
@@ -91,7 +101,9 @@ describe('UpdateMatch Controller', () => {
     const httpRequest = {
       body: {
         code: 'valid_code',
-        scoreTeamA: 2,
+        teamA: 'valid_teamA',
+        scoreTeamA: 1,
+        teamB: 'valid_teamB',
         scoreTeamB: 2
       }
     }
@@ -115,7 +127,9 @@ describe('UpdateMatch Controller', () => {
     await sut.handle(makeFakeRequest())
     expect(addSpy).toHaveBeenCalledWith({
       code: 'valid_code',
+      teamA: 'valid_teamA',
       scoreTeamA: 1,
+      teamB: 'valid_teamB',
       scoreTeamB: 2,
       winner: 'valid_winner'
     })
