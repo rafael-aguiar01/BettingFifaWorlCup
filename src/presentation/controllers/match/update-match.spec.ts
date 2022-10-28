@@ -108,4 +108,16 @@ describe('UpdateMatch Controller', () => {
     const httpResponse = await sut.handle(makeFakeRequest())
     expect(httpResponse).toEqual(serverError(new ServerError(null)))
   })
+
+  test('Should call Updatematch with correct values', async () => {
+    const { sut, updateMatchStub } = makeSut()
+    const addSpy = jest.spyOn(updateMatchStub, 'update')
+    await sut.handle(makeFakeRequest())
+    expect(addSpy).toHaveBeenCalledWith({
+      code: 'valid_code',
+      scoreTeamA: 1,
+      scoreTeamB: 2,
+      winner: 'valid_winner'
+    })
+  })
 })
