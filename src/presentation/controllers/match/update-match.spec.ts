@@ -1,13 +1,23 @@
 import { UpdateMatchController } from './update-match'
-import { MissingParamError } from '../../errors'
-import { badRequest } from '../../helpers/http-helper'
+import { MissingParamError, ServerError } from '../../errors'
+import { badRequest, serverError } from '../../helpers/http-helper'
 import { UpdateMatch, UpdateMatchModel } from '../../../domain/usecases/update-match'
+import { HttpRequest } from '../../protocols'
 
 const makeFakeMatch = (): UpdateMatchModel => ({
   code: 'valid_code',
   scoreTeamA: 2,
   scoreTeamB: 2,
   winner: 'valid_winner'
+})
+
+const makeFakeRequest = (): HttpRequest => ({
+  body: {
+    code: 'valid_code',
+    scoreTeamA: 1,
+    scoreTeamB: 2,
+    winner: 'valid_winner'
+  }
 })
 
 const makeUpdateMatch = (): UpdateMatch => {
@@ -88,5 +98,14 @@ describe('UpdateMatch Controller', () => {
     const httpResponse = await sut.handle(httpRequest)
     expect(httpResponse.statusCode).toBe(400)
     expect(httpResponse).toEqual(badRequest(new MissingParamError('winner')))
+  })
+
+  test('Should return 500 if Updatematch throws', async () => {
+    const { sut, updateMatchStub } = makeSut()
+    jest.spyOn(updateMatchStub, 'update').mockImplementationOnce(async () => {
+      return new Promise((resolve, reject) => reject(new Error()))
+    })
+    const httpResponse = await sut.handle(makeFakeRequest())
+    expect(httpResponse).toEqual(serverError(new ServerError(null)))
   })
 })
