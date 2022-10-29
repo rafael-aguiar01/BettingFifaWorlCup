@@ -1,7 +1,7 @@
 import { MatchModel } from '../models/match'
 
 export interface AddMatchModel {
-  code: string
+  code: number
   teamA: string
   scoreTeamA: number
   teamB: string

@@ -13,7 +13,7 @@ const makeAddMatchRepository = (): AddMatchRepository => {
 }
 
 const makeFakeMatch = (): MatchModel => ({
-  code: 'valid_code',
+  code: 2,
   teamA: 'valid_teamA',
   scoreTeamA: 2,
   teamB: 'valid_TeamB',
@@ -22,7 +22,7 @@ const makeFakeMatch = (): MatchModel => ({
 })
 
 const makeFakeMatchData = (): MatchModel => ({
-  code: 'valid_code',
+  code: 2,
   teamA: 'valid_teamA',
   scoreTeamA: 2,
   teamB: 'valid_TeamB',
@@ -50,7 +50,7 @@ describe('DbAddMatch Usecase', () => {
     const addSpy = jest.spyOn(addMatchRepositoryStub, 'add')
     await sut.add(makeFakeMatchData())
     expect(addSpy).toHaveBeenCalledWith({
-      code: 'valid_code',
+      code: 2,
       teamA: 'valid_teamA',
       scoreTeamA: 2,
       teamB: 'valid_TeamB',

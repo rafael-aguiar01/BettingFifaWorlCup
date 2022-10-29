@@ -22,7 +22,7 @@ describe('Match Mongo Repository', () => {
   test('Should return an match on success', async () => {
     const sut = makeSut()
     const match = await sut.add({
-      code: 'any_code',
+      code: 2,
       teamA: 'any_teamA',
       scoreTeamA: 1,
       teamB: 'any_teamB',
@@ -30,7 +30,7 @@ describe('Match Mongo Repository', () => {
       winner: 'valid_winner'
     })
     expect(match).toBeTruthy()
-    expect(match.code).toBe('any_code')
+    expect(match.code).toBe(2)
     expect(match.teamA).toBe('any_teamA')
     expect(match.scoreTeamA).toBe(1)
     expect(match.teamB).toBe('any_teamB')

@@ -5,7 +5,7 @@ import { UpdateMatch, UpdateMatchModel } from '../../../domain/usecases/update-m
 import { HttpRequest } from '../../protocols'
 
 const makeFakeMatch = (): UpdateMatchModel => ({
-  code: 'valid_code',
+  code: 2,
   teamA: 'valid_teamA',
   scoreTeamA: 1,
   teamB: 'valid_teamB',
@@ -15,7 +15,7 @@ const makeFakeMatch = (): UpdateMatchModel => ({
 
 const makeFakeRequest = (): HttpRequest => ({
   body: {
-    code: 'valid_code',
+    code: 2,
     teamA: 'valid_teamA',
     scoreTeamA: 1,
     teamB: 'valid_teamB',
@@ -68,7 +68,7 @@ describe('UpdateMatch Controller', () => {
     const { sut } = makeSut()
     const httpRequest = {
       body: {
-        code: 'valid_code',
+        code: 2,
         teamA: 'valid_teamA',
         teamB: 'valid_teamB',
         scoreTeamB: 2,
@@ -84,7 +84,7 @@ describe('UpdateMatch Controller', () => {
     const { sut } = makeSut()
     const httpRequest = {
       body: {
-        code: 'valid_code',
+        code: 2,
         teamA: 'valid_teamA',
         scoreTeamA: 1,
         teamB: 'valid_teamB',
@@ -100,7 +100,7 @@ describe('UpdateMatch Controller', () => {
     const { sut } = makeSut()
     const httpRequest = {
       body: {
-        code: 'valid_code',
+        code: 2,
         teamA: 'valid_teamA',
         scoreTeamA: 1,
         teamB: 'valid_teamB',
@@ -126,7 +126,7 @@ describe('UpdateMatch Controller', () => {
     const addSpy = jest.spyOn(updateMatchStub, 'update')
     await sut.handle(makeFakeRequest())
     expect(addSpy).toHaveBeenCalledWith({
-      code: 'valid_code',
+      code: 2,
       teamA: 'valid_teamA',
       scoreTeamA: 1,
       teamB: 'valid_teamB',

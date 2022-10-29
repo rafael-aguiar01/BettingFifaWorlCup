@@ -1,5 +1,5 @@
 export interface UpdateMatchModel {
-  code: string
+  code: number
   teamA: string
   scoreTeamA: number
   teamB: string

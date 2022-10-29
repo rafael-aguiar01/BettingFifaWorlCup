@@ -6,7 +6,7 @@ import { HttpRequest } from '../../protocols'
 import { AddMatch, AddMatchModel } from '../../../domain/usecases/add-match'
 
 const makeFakeMatch = (): MatchModel => ({
-  code: 'valid_code',
+  code: 2,
   teamA: 'valid_teamA',
   scoreTeamA: 1,
   teamB: 'valid_teamB',
@@ -16,7 +16,7 @@ const makeFakeMatch = (): MatchModel => ({
 
 const makeFakeRequest = (): HttpRequest => ({
   body: {
-    code: 'valid_code',
+    code: 2,
     teamA: 'valid_teamA',
     scoreTeamA: 1,
     teamB: 'valid_teamB',
@@ -69,7 +69,7 @@ describe('AddMatch Controller', () => {
     const { sut } = makeSut()
     const httpRequest = {
       body: {
-        code: 'valid_code',
+        code: 2,
         scoreTeamA: 1,
         teamB: 'valid_teamB',
         scoreTeamB: 2,
@@ -85,7 +85,7 @@ describe('AddMatch Controller', () => {
     const { sut } = makeSut()
     const httpRequest = {
       body: {
-        code: 'valid_code',
+        code: 2,
         teamA: 'valid_teamA',
         teamB: 'valid_teamB',
         scoreTeamB: 2,
@@ -101,7 +101,7 @@ describe('AddMatch Controller', () => {
     const { sut } = makeSut()
     const httpRequest = {
       body: {
-        code: 'valid_code',
+        code: 2,
         teamA: 'valid_teamA',
         scoreTeamA: 1,
         scoreTeamB: 2,
@@ -117,7 +117,7 @@ describe('AddMatch Controller', () => {
     const { sut } = makeSut()
     const httpRequest = {
       body: {
-        code: 'valid_code',
+        code: 2,
         teamA: 'valid_teamA',
         scoreTeamA: 1,
         teamB: 'valid_teamB',
@@ -133,7 +133,7 @@ describe('AddMatch Controller', () => {
     const { sut } = makeSut()
     const httpRequest = {
       body: {
-        code: 'valid_code',
+        code: 2,
         teamA: 'valid_teamA',
         scoreTeamA: 1,
         teamB: 'valid_teamB',
@@ -159,7 +159,7 @@ describe('AddMatch Controller', () => {
     const addSpy = jest.spyOn(addMatchStub, 'add')
     await sut.handle(makeFakeRequest())
     expect(addSpy).toHaveBeenCalledWith({
-      code: 'valid_code',
+      code: 2,
       teamA: 'valid_teamA',
       scoreTeamA: 1,
       teamB: 'valid_teamB',
