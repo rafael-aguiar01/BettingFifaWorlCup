@@ -3,4 +3,5 @@ export interface PlayerModel {
   cellphone: string
   matches: object
   position: object
+  score?: object
 }
