@@ -13,15 +13,15 @@ const makeAddPlayerRepository = (): AddPlayerRepository => {
 const makeFakePlayer = (): PlayerModel => ({
   name: 'valid_code',
   cellphone: 'valid_cellphone',
-  matches: {},
-  position: {}
+  matches: [],
+  position: []
 })
 
 const makeFakePlayerData = (): AddPlayerModel => ({
   name: 'valid_code',
   cellphone: 'valid_cellphone',
-  matches: {},
-  position: {}
+  matches: [],
+  position: []
 })
 
 interface SutTypes {
@@ -46,8 +46,8 @@ describe('DbAddPlayer Usecase', () => {
     expect(addSpy).toHaveBeenCalledWith({
       name: 'valid_code',
       cellphone: 'valid_cellphone',
-      matches: {},
-      position: {}
+      matches: [],
+      position: []
     })
   })
 

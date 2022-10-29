@@ -1,7 +1,7 @@
 export interface PlayerModel {
   name: string
   cellphone: string
-  matches: object
-  position: object
+  matches: any[]
+  position: any[]
   score?: object
 }

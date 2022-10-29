@@ -8,16 +8,16 @@ import { AddPlayer, AddPlayerModel } from '../../../domain/usecases/add-player'
 const makeFakePlayer = (): PlayerModel => ({
   name: 'valid_name',
   cellphone: 'cellphone_number',
-  matches: {},
-  position: {}
+  matches: [],
+  position: []
 })
 
 const makeFakeRequest = (): HttpRequest => ({
   body: ({
     name: 'valid_name',
     cellphone: 'cellphone_number',
-    matches: {},
-    position: {}
+    matches: [],
+    position: []
   })
 })
 
@@ -50,8 +50,8 @@ describe('AddPlayer Controller', () => {
     const httpRequest = {
       body: {
         cellphone: 'cellphone_number',
-        matches: {},
-        position: {}
+        matches: [],
+        position: []
       }
     }
     const httpResponse = await sut.handle(httpRequest)
@@ -65,7 +65,7 @@ describe('AddPlayer Controller', () => {
       body: {
         name: 'valid_name',
         cellphone: 'cellphone_number',
-        position: {}
+        position: []
       }
     }
     const httpResponse = await sut.handle(httpRequest)
@@ -78,8 +78,8 @@ describe('AddPlayer Controller', () => {
     const httpRequest = {
       body: {
         name: 'valid_name',
-        matches: {},
-        position: {}
+        matches: [],
+        position: []
       }
     }
     const httpResponse = await sut.handle(httpRequest)
@@ -93,7 +93,7 @@ describe('AddPlayer Controller', () => {
       body: {
         name: 'valid_name',
         cellphone: 'cellphone_number',
-        matches: {}
+        matches: []
       }
     }
     const httpResponse = await sut.handle(httpRequest)
@@ -108,8 +108,8 @@ describe('AddPlayer Controller', () => {
     expect(addSpy).toHaveBeenCalledWith({
       name: 'valid_name',
       cellphone: 'cellphone_number',
-      matches: {},
-      position: {}
+      matches: [],
+      position: []
     })
   })
 
