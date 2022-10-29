@@ -8,9 +8,7 @@ import { AddMatch, AddMatchModel } from '../../../domain/usecases/add-match'
 const makeFakeMatch = (): MatchModel => ({
   code: 2,
   teamA: 'valid_teamA',
-  scoreTeamA: 1,
   teamB: 'valid_teamB',
-  scoreTeamB: 2,
   winner: 'valid_winner'
 })
 
@@ -18,9 +16,7 @@ const makeFakeRequest = (): HttpRequest => ({
   body: {
     code: 2,
     teamA: 'valid_teamA',
-    scoreTeamA: 1,
     teamB: 'valid_teamB',
-    scoreTeamB: 2,
     winner: 'valid_winner'
   }
 })
@@ -54,9 +50,7 @@ describe('AddMatch Controller', () => {
     const httpRequest = {
       body: {
         teamA: 'valid_teamA',
-        scoreTeamA: 1,
         teamB: 'valid_teamB',
-        scoreTeamB: 2,
         winner: 'valid_winner'
       }
     }
@@ -70,9 +64,7 @@ describe('AddMatch Controller', () => {
     const httpRequest = {
       body: {
         code: 2,
-        scoreTeamA: 1,
         teamB: 'valid_teamB',
-        scoreTeamB: 2,
         winner: 'valid_winner'
       }
     }
@@ -81,68 +73,18 @@ describe('AddMatch Controller', () => {
     expect(httpResponse).toEqual(badRequest(new MissingParamError('teamA')))
   })
 
-  test('Should return 400 if no scoreTeamA is provided', async () => {
-    const { sut } = makeSut()
-    const httpRequest = {
-      body: {
-        code: 2,
-        teamA: 'valid_teamA',
-        teamB: 'valid_teamB',
-        scoreTeamB: 2,
-        winner: 'valid_winner'
-      }
-    }
-    const httpResponse = await sut.handle(httpRequest)
-    expect(httpResponse.statusCode).toBe(400)
-    expect(httpResponse).toEqual(badRequest(new MissingParamError('scoreTeamA')))
-  })
-
   test('Should return 400 if no teamB is provided', async () => {
     const { sut } = makeSut()
     const httpRequest = {
       body: {
         code: 2,
         teamA: 'valid_teamA',
-        scoreTeamA: 1,
-        scoreTeamB: 2,
         winner: 'valid_winner'
       }
     }
     const httpResponse = await sut.handle(httpRequest)
     expect(httpResponse.statusCode).toBe(400)
     expect(httpResponse).toEqual(badRequest(new MissingParamError('teamB')))
-  })
-
-  test('Should return 400 if no scoreTeamB is provided', async () => {
-    const { sut } = makeSut()
-    const httpRequest = {
-      body: {
-        code: 2,
-        teamA: 'valid_teamA',
-        scoreTeamA: 1,
-        teamB: 'valid_teamB',
-        winner: 'valid_winner'
-      }
-    }
-    const httpResponse = await sut.handle(httpRequest)
-    expect(httpResponse.statusCode).toBe(400)
-    expect(httpResponse).toEqual(badRequest(new MissingParamError('scoreTeamB')))
-  })
-
-  test('Should return 400 if no winner is provided', async () => {
-    const { sut } = makeSut()
-    const httpRequest = {
-      body: {
-        code: 2,
-        teamA: 'valid_teamA',
-        scoreTeamA: 1,
-        teamB: 'valid_teamB',
-        scoreTeamB: 2
-      }
-    }
-    const httpResponse = await sut.handle(httpRequest)
-    expect(httpResponse.statusCode).toBe(400)
-    expect(httpResponse).toEqual(badRequest(new MissingParamError('winner')))
   })
 
   test('Should return 500 if Addmatch throws', async () => {
@@ -161,10 +103,7 @@ describe('AddMatch Controller', () => {
     expect(addSpy).toHaveBeenCalledWith({
       code: 2,
       teamA: 'valid_teamA',
-      scoreTeamA: 1,
-      teamB: 'valid_teamB',
-      scoreTeamB: 2,
-      winner: 'valid_winner'
+      teamB: 'valid_teamB'
     })
   })
 })

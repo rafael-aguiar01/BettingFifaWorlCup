@@ -1,10 +1,10 @@
 export interface UpdateMatchModel {
   code: number
   teamA: string
-  scoreTeamA: number
+  scoreTeamA?: number
   teamB: string
-  scoreTeamB: number
-  winner: string
+  scoreTeamB?: number
+  winner?: string
 }
 
 export interface UpdateMatch {
