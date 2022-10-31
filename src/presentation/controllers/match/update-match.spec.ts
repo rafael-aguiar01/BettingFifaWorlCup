@@ -3,6 +3,16 @@ import { MissingParamError, ServerError } from '../../errors'
 import { badRequest, serverError } from '../../helpers/http-helper'
 import { UpdateMatch, UpdateMatchModel } from '../../../domain/usecases/update-match'
 import { HttpRequest } from '../../protocols'
+import { CountScore } from '../../protocols/countScore'
+
+const makeCountScore = (): CountScore => {
+  class CountScoreStub implements CountScore {
+    isOk (code: number, scoreTeamA: number, scoreTeamB: number, winner: string): boolean {
+      return true
+    }
+  }
+  return new CountScoreStub()
+}
 
 const makeFakeMatch = (): UpdateMatchModel => ({
   code: 2,
@@ -36,13 +46,16 @@ const makeUpdateMatch = (): UpdateMatch => {
 interface SutTypes {
   sut: UpdateMatchController
   updateMatchStub: UpdateMatch
+  countScoreStub: CountScore
 }
 
 const makeSut = (): SutTypes => {
+  const countScoreStub = makeCountScore()
   const updateMatchStub = makeUpdateMatch()
-  const sut = new UpdateMatchController(updateMatchStub)
+  const sut = new UpdateMatchController(updateMatchStub, countScoreStub)
   return {
     sut,
+    countScoreStub,
     updateMatchStub
   }
 }
@@ -110,6 +123,13 @@ describe('UpdateMatch Controller', () => {
     const httpResponse = await sut.handle(httpRequest)
     expect(httpResponse.statusCode).toBe(400)
     expect(httpResponse).toEqual(badRequest(new MissingParamError('winner')))
+  })
+
+  test('Should call countScore with correct values', async () => {
+    const { sut, countScoreStub } = makeSut()
+    const isValidSpy = jest.spyOn(countScoreStub, 'isOk')
+    await sut.handle(makeFakeRequest())
+    expect(isValidSpy).toHaveBeenCalledWith(2, 1, 2, 'valid_winner')
   })
 
   test('Should return 500 if Updatematch throws', async () => {
