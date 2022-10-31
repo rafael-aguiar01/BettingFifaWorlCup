@@ -132,6 +132,15 @@ describe('UpdateMatch Controller', () => {
     expect(isValidSpy).toHaveBeenCalledWith(2, 1, 2, 'valid_winner')
   })
 
+  test('Should return 500 if EmailValidator throws', async () => {
+    const { sut, countScoreStub } = makeSut()
+    jest.spyOn(countScoreStub, 'isOk').mockImplementationOnce(() => {
+      throw new Error()
+    })
+    const httpResponse = await sut.handle(makeFakeRequest())
+    expect(httpResponse).toEqual(serverError(new ServerError(null)))
+  })
+
   test('Should return 500 if Updatematch throws', async () => {
     const { sut, updateMatchStub } = makeSut()
     jest.spyOn(updateMatchStub, 'update').mockImplementationOnce(async () => {
