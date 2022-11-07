@@ -25,107 +25,79 @@ export class MatchMongoRepository implements AddMatchRepository {
       let scoreUpdated
       if (!playerDoc.score){
         scoreUpdated = {
-          RC: 0,
-          PC: 0,
-          LC: 0,
-          RC2: 0,
-          PC2: 0,
-          RC3: 0,
-          PC3: 0,
-          RC4: 0,
-          PC4: 0,
-          RC5: 0,
-          PC5: 0,
-          CC: 0,
-          VC: 0,
-          THIRD: 0,
-          TOTAL: 0
+          FirstRoundCorrectResult: 0,
+          FirstRoundCorrectScore: 0,
+          GroupPositionCorrect: 0,
+          RoundOf16CorrectResult: 0,
+          RoundOf16CorrectScore: 0,
+          QuarterfinalsCorrectResult: 0,
+          QuarterfinalsCorrectScore: 0,
+          SemifinalsCorrectResult: 0,
+          SemifinalsCorrectScore: 0,
+          FinalsCorrectResult: 0,
+          FinalsCorrectScore: 0,
+          Champion: 0,
+          ViceChampion: 0,
+          ThirdPlace: 0,
+          TotalPoints: 0
         }
       } else {
         scoreUpdated = playerDoc.score
       }
       playerDoc.matches.forEach(async function (matchItem){
+        const scoreCorrect = matchData.scoreTeamA === matchItem.scoreTeamA && matchData.scoreTeamB === matchItem.scoreTeamB
+        const scoreIncorrect = matchData.scoreTeamA !== matchItem.scoreTeamA || matchData.scoreTeamB !== matchItem.scoreTeamB
+        const checkTwoTeams = (matchData.teamA === matchItem.teamA || matchData.teamB === matchItem.teamB)
+        const checkOneTeam = (matchData.teamA === matchItem.teamA || matchData.teamB === matchItem.teamB)
+        const correctWinner = matchData.winner === matchItem.winner
         if ((matchData.code === matchItem.code)){
           let swell
           if (matchData.code <= 48){
-            if (matchData.scoreTeamA === matchItem.scoreTeamA &&
-                matchData.scoreTeamB === matchItem.scoreTeamB
-            ){
-              scoreUpdated.PC ++
+            if (scoreCorrect){
+              scoreUpdated.FirstRoundCorrectScore ++
             }
-            if ((matchData.scoreTeamA !== matchItem.scoreTeamA ||
-                matchData.scoreTeamB !== matchItem.scoreTeamB) &&
-                matchData.winner === matchItem.winner
-            ){
-              scoreUpdated.RC ++
+            if (scoreIncorrect && correctWinner){
+              scoreUpdated.FirstRoundCorrectResult ++
             }
           }
           if (matchData.code >= 49 && matchData.code <= 64){
             console.log('Oitavas de Final')
-            if (matchData.teamA === matchItem.teamA &&
-                matchData.teamB === matchItem.teamB
-            ){ swell = 1 } else { swell = 0.5 }
-            if (matchData.scoreTeamA === matchItem.scoreTeamA &&
-                matchData.scoreTeamB === matchItem.scoreTeamB
-            ){
-              scoreUpdated.PC2 = scoreUpdated.PC2 + swell
+            if (checkTwoTeams){ swell = 1 } else if (checkOneTeam) { swell = 0.5 } else { swell = 0 }
+            if (scoreCorrect){
+              scoreUpdated.RoundOf16CorrectScore = scoreUpdated.RoundOf16CorrectScore + swell
             }
-            if ((matchData.scoreTeamA !== matchItem.scoreTeamA ||
-                matchData.scoreTeamB !== matchItem.scoreTeamB) &&
-                matchData.winner === matchItem.winner
-            ){
-              scoreUpdated.RC2 = scoreUpdated.RC2 + swell
+            if (scoreIncorrect && correctWinner){
+              scoreUpdated.RoundOf16CorrectResult = scoreUpdated.RoundOf16CorrectResult + swell
             }
           }
           if (matchData.code >= 65 && matchData.code <= 72){
             console.log('Quartas de Final')
-            if (matchData.teamA === matchItem.teamA &&
-                matchData.teamB === matchItem.teamB
-            ){ swell = 1 } else { swell = 0.5 }
-            if (matchData.scoreTeamA === matchItem.scoreTeamA &&
-                matchData.scoreTeamB === matchItem.scoreTeamB
-            ){
-              scoreUpdated.PC3 = scoreUpdated.PC3 + swell
+            if (checkTwoTeams){ swell = 1 } else if (checkOneTeam) { swell = 0.5 } else { swell = 0 }
+            if (scoreCorrect){
+              scoreUpdated.QuarterfinalsCorrectScore = scoreUpdated.QuarterfinalsCorrectScore + swell
             }
-            if ((matchData.scoreTeamA !== matchItem.scoreTeamA ||
-                matchData.scoreTeamB !== matchItem.scoreTeamB) &&
-                matchData.winner === matchItem.winner
-            ){
-              scoreUpdated.RC3 = scoreUpdated.RC3 + swell
+            if (scoreIncorrect && correctWinner){
+              scoreUpdated.QuarterfinalsCorrectResult = scoreUpdated.QuarterfinalsCorrectResult + swell
             }
           }
           if (matchData.code >= 73 && matchData.code <= 76){
             console.log('Semi Final')
-            if (matchData.teamA === matchItem.teamA &&
-                matchData.teamB === matchItem.teamB
-            ){ swell = 1 } else { swell = 0.5 }
-            if (matchData.scoreTeamA === matchItem.scoreTeamA &&
-                matchData.scoreTeamB === matchItem.scoreTeamB
-            ){
-              scoreUpdated.PC4 = scoreUpdated.PC4 + swell
+            if (checkTwoTeams){ swell = 1 } else if (checkOneTeam) { swell = 0.5 } else { swell = 0 }
+            if (scoreCorrect){
+              scoreUpdated.FinalsCorrectScore = scoreUpdated.FinalsCorrectScore + swell
             }
-            if ((matchData.scoreTeamA !== matchItem.scoreTeamA ||
-                matchData.scoreTeamB !== matchItem.scoreTeamB) &&
-                matchData.winner === matchItem.winner
-            ){
-              scoreUpdated.RC4 = scoreUpdated.RC4 + swell
+            if (scoreCorrect && correctWinner){
+              scoreUpdated.SemifinalsCorrectResult = scoreUpdated.SemifinalsCorrectResult + swell
             }
           }
           if (matchData.code >= 77 && matchData.code <= 78){
             console.log('Final')
-            if (matchData.teamA === matchItem.teamA &&
-                matchData.teamB === matchItem.teamB
-            ){ swell = 1 } else { swell = 0.5 }
-            if (matchData.scoreTeamA === matchItem.scoreTeamA &&
-                matchData.scoreTeamB === matchItem.scoreTeamB
-            ){
-              scoreUpdated.PC5 = scoreUpdated.PC5 + swell
+            if (checkTwoTeams){ swell = 1 } else if (checkOneTeam) { swell = 0.5 } else { swell = 0 }
+            if (scoreCorrect){
+              scoreUpdated.FinalsCorrectScore = scoreUpdated.FinalsCorrectScore + swell
             }
-            if ((matchData.scoreTeamA !== matchItem.scoreTeamA ||
-                matchData.scoreTeamB !== matchItem.scoreTeamB) &&
-                matchData.winner === matchItem.winner
-            ){
-              scoreUpdated.RC5 = scoreUpdated.RC5 + swell
+            if (scoreIncorrect && correctWinner){
+              scoreUpdated.FinalsCorrectResult = scoreUpdated.FinalsCorrectResult + swell
             }
           }
         }
