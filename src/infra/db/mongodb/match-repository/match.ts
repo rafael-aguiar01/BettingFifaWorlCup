@@ -1,5 +1,4 @@
 /* eslint-disable @typescript-eslint/restrict-plus-operands */
-/* eslint-disable space-unary-ops */
 
 import { AddMatchRepository } from '../../../../data/protocols/add-match-repository'
 import { MatchModel } from '../../../../domain/models/match'
@@ -62,10 +61,10 @@ export class MatchMongoRepository implements AddMatchRepository {
           if (checkTwoTeams){ swell = 1 } else if (checkOneTeam) { swell = 0.5 } else { swell = 0 }
           if (firstRound){
             if (scoreCorrect){
-              scoreUpdated.FirstRoundCorrectScore ++
+              scoreUpdated.FirstRoundCorrectScore++
             }
             if (resultCorrect){
-              scoreUpdated.FirstRoundCorrectResult ++
+              scoreUpdated.FirstRoundCorrectResult++
             }
           }
           if (roundOf16){
