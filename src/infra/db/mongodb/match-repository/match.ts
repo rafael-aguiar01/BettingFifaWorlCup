@@ -46,17 +46,17 @@ export class MatchMongoRepository implements AddMatchRepository {
       }
       playerDoc.matches.forEach(async function (matchItem){
         const correctWinner = matchData.winner === matchItem.winner
-        const scoreCorrect = matchData.scoreTeamA === matchItem.scoreTeamA && matchData.scoreTeamB === matchItem.scoreTeamB
-        const resultCorrect = (matchData.scoreTeamA !== matchItem.scoreTeamA || matchData.scoreTeamB !== matchItem.scoreTeamB) && correctWinner
-        const checkTwoTeams = (matchData.teamA === matchItem.teamA || matchData.teamB === matchItem.teamB)
+        const correctLooser = (matchData.teamA === matchItem.teamA || matchData.teamB === matchItem.teamB) && (!correctWinner)
+        const scoreCorrect = (matchData.scoreTeamA === matchItem.scoreTeamA && matchData.scoreTeamB === matchItem.scoreTeamB)
+        const resultCorrect = (matchData.scoreTeamA !== matchItem.scoreTeamA || matchData.scoreTeamB !== matchItem.scoreTeamB) && (correctWinner || correctLooser)
+        const checkTwoTeams = (matchData.teamA === matchItem.teamA && matchData.teamB === matchItem.teamB)
         const checkOneTeam = (matchData.teamA === matchItem.teamA || matchData.teamB === matchItem.teamB)
-
         const firstRound = matchData.code <= 48
         const roundOf16 = matchData.code >= 49 && matchData.code <= 64
         const quarterFinals = matchData.code >= 65 && matchData.code <= 72
         const semiFinals = matchData.code >= 73 && matchData.code <= 76
         const finals = matchData.code >= 77 && matchData.code <= 78
-        let swell
+        let swell: Number
 
         if ((matchData.code === matchItem.code)){
           if (checkTwoTeams){ swell = 1 } else if (checkOneTeam) { swell = 0.5 } else { swell = 0 }
@@ -86,7 +86,7 @@ export class MatchMongoRepository implements AddMatchRepository {
           }
           if (semiFinals){
             if (scoreCorrect){
-              scoreUpdated.FinalsCorrectScore = scoreUpdated.FinalsCorrectScore + swell
+              scoreUpdated.SemifinalsCorrectScore = scoreUpdated.SemifinalsCorrectScore + swell
             }
             if (resultCorrect){
               scoreUpdated.SemifinalsCorrectResult = scoreUpdated.SemifinalsCorrectResult + swell
