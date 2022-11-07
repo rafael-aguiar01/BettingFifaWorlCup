@@ -1,7 +1,6 @@
-/* eslint-disable @typescript-eslint/restrict-plus-operands */
-
 import { AddMatchRepository } from '../../../../data/protocols/add-match-repository'
 import { MatchModel } from '../../../../domain/models/match'
+import { ScoreModel } from '../../../../domain/models/score'
 import { AddMatchModel } from '../../../../domain/usecases/add-match'
 import { UpdateMatchModel } from '../../../../domain/usecases/update-match'
 import { MongoHelper } from '../helpers/mongo-helper'
@@ -21,7 +20,7 @@ export class MatchMongoRepository implements AddMatchRepository {
     )
     const playerCollection = await MongoHelper.getCollection('players')
     await playerCollection.find().forEach(async function (playerDoc) {
-      let scoreUpdated
+      let scoreUpdated: ScoreModel
       if (!playerDoc.score){
         scoreUpdated = {
           FirstRoundCorrectResult: 0,
@@ -55,7 +54,7 @@ export class MatchMongoRepository implements AddMatchRepository {
         const quarterFinals = matchData.code >= 65 && matchData.code <= 72
         const semiFinals = matchData.code >= 73 && matchData.code <= 76
         const finals = matchData.code >= 77 && matchData.code <= 78
-        let swell: Number
+        let swell: number
 
         if ((matchData.code === matchItem.code)){
           if (checkTwoTeams){ swell = 1 } else if (checkOneTeam) { swell = 0.5 } else { swell = 0 }
