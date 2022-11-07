@@ -45,8 +45,9 @@ export class MatchMongoRepository implements AddMatchRepository {
         scoreUpdated = playerDoc.score
       }
       playerDoc.matches.forEach(async function (matchItem){
+        const correctWinner = matchData.winner === matchItem.winner
         const scoreCorrect = matchData.scoreTeamA === matchItem.scoreTeamA && matchData.scoreTeamB === matchItem.scoreTeamB
-        const scoreIncorrect = matchData.scoreTeamA !== matchItem.scoreTeamA || matchData.scoreTeamB !== matchItem.scoreTeamB
+        const resultCorrect = (matchData.scoreTeamA !== matchItem.scoreTeamA || matchData.scoreTeamB !== matchItem.scoreTeamB) && correctWinner
         const checkTwoTeams = (matchData.teamA === matchItem.teamA || matchData.teamB === matchItem.teamB)
         const checkOneTeam = (matchData.teamA === matchItem.teamA || matchData.teamB === matchItem.teamB)
 
@@ -55,16 +56,15 @@ export class MatchMongoRepository implements AddMatchRepository {
         const quarterFinals = matchData.code >= 65 && matchData.code <= 72
         const semiFinals = matchData.code >= 73 && matchData.code <= 76
         const finals = matchData.code >= 77 && matchData.code <= 78
+        let swell
 
-        const correctWinner = matchData.winner === matchItem.winner
         if ((matchData.code === matchItem.code)){
-          let swell
           if (checkTwoTeams){ swell = 1 } else if (checkOneTeam) { swell = 0.5 } else { swell = 0 }
           if (firstRound){
             if (scoreCorrect){
               scoreUpdated.FirstRoundCorrectScore ++
             }
-            if (scoreIncorrect && correctWinner){
+            if (resultCorrect){
               scoreUpdated.FirstRoundCorrectResult ++
             }
           }
@@ -72,7 +72,7 @@ export class MatchMongoRepository implements AddMatchRepository {
             if (scoreCorrect){
               scoreUpdated.RoundOf16CorrectScore = scoreUpdated.RoundOf16CorrectScore + swell
             }
-            if (scoreIncorrect && correctWinner){
+            if (resultCorrect){
               scoreUpdated.RoundOf16CorrectResult = scoreUpdated.RoundOf16CorrectResult + swell
             }
           }
@@ -80,7 +80,7 @@ export class MatchMongoRepository implements AddMatchRepository {
             if (scoreCorrect){
               scoreUpdated.QuarterfinalsCorrectScore = scoreUpdated.QuarterfinalsCorrectScore + swell
             }
-            if (scoreIncorrect && correctWinner){
+            if (resultCorrect){
               scoreUpdated.QuarterfinalsCorrectResult = scoreUpdated.QuarterfinalsCorrectResult + swell
             }
           }
@@ -88,7 +88,7 @@ export class MatchMongoRepository implements AddMatchRepository {
             if (scoreCorrect){
               scoreUpdated.FinalsCorrectScore = scoreUpdated.FinalsCorrectScore + swell
             }
-            if (scoreCorrect && correctWinner){
+            if (resultCorrect){
               scoreUpdated.SemifinalsCorrectResult = scoreUpdated.SemifinalsCorrectResult + swell
             }
           }
@@ -96,7 +96,7 @@ export class MatchMongoRepository implements AddMatchRepository {
             if (scoreCorrect){
               scoreUpdated.FinalsCorrectScore = scoreUpdated.FinalsCorrectScore + swell
             }
-            if (scoreIncorrect && correctWinner){
+            if (resultCorrect){
               scoreUpdated.FinalsCorrectResult = scoreUpdated.FinalsCorrectResult + swell
             }
           }
