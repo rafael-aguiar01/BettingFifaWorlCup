@@ -49,10 +49,18 @@ export class MatchMongoRepository implements AddMatchRepository {
         const scoreIncorrect = matchData.scoreTeamA !== matchItem.scoreTeamA || matchData.scoreTeamB !== matchItem.scoreTeamB
         const checkTwoTeams = (matchData.teamA === matchItem.teamA || matchData.teamB === matchItem.teamB)
         const checkOneTeam = (matchData.teamA === matchItem.teamA || matchData.teamB === matchItem.teamB)
+
+        const firstRound = matchData.code <= 48
+        const roundOf16 = matchData.code >= 49 && matchData.code <= 64
+        const quarterFinals = matchData.code >= 65 && matchData.code <= 72
+        const semiFinals = matchData.code >= 73 && matchData.code <= 76
+        const finals = matchData.code >= 77 && matchData.code <= 78
+
         const correctWinner = matchData.winner === matchItem.winner
         if ((matchData.code === matchItem.code)){
           let swell
-          if (matchData.code <= 48){
+          if (checkTwoTeams){ swell = 1 } else if (checkOneTeam) { swell = 0.5 } else { swell = 0 }
+          if (firstRound){
             if (scoreCorrect){
               scoreUpdated.FirstRoundCorrectScore ++
             }
@@ -60,9 +68,7 @@ export class MatchMongoRepository implements AddMatchRepository {
               scoreUpdated.FirstRoundCorrectResult ++
             }
           }
-          if (matchData.code >= 49 && matchData.code <= 64){
-            console.log('Oitavas de Final')
-            if (checkTwoTeams){ swell = 1 } else if (checkOneTeam) { swell = 0.5 } else { swell = 0 }
+          if (roundOf16){
             if (scoreCorrect){
               scoreUpdated.RoundOf16CorrectScore = scoreUpdated.RoundOf16CorrectScore + swell
             }
@@ -70,9 +76,7 @@ export class MatchMongoRepository implements AddMatchRepository {
               scoreUpdated.RoundOf16CorrectResult = scoreUpdated.RoundOf16CorrectResult + swell
             }
           }
-          if (matchData.code >= 65 && matchData.code <= 72){
-            console.log('Quartas de Final')
-            if (checkTwoTeams){ swell = 1 } else if (checkOneTeam) { swell = 0.5 } else { swell = 0 }
+          if (quarterFinals){
             if (scoreCorrect){
               scoreUpdated.QuarterfinalsCorrectScore = scoreUpdated.QuarterfinalsCorrectScore + swell
             }
@@ -80,9 +84,7 @@ export class MatchMongoRepository implements AddMatchRepository {
               scoreUpdated.QuarterfinalsCorrectResult = scoreUpdated.QuarterfinalsCorrectResult + swell
             }
           }
-          if (matchData.code >= 73 && matchData.code <= 76){
-            console.log('Semi Final')
-            if (checkTwoTeams){ swell = 1 } else if (checkOneTeam) { swell = 0.5 } else { swell = 0 }
+          if (semiFinals){
             if (scoreCorrect){
               scoreUpdated.FinalsCorrectScore = scoreUpdated.FinalsCorrectScore + swell
             }
@@ -90,9 +92,7 @@ export class MatchMongoRepository implements AddMatchRepository {
               scoreUpdated.SemifinalsCorrectResult = scoreUpdated.SemifinalsCorrectResult + swell
             }
           }
-          if (matchData.code >= 77 && matchData.code <= 78){
-            console.log('Final')
-            if (checkTwoTeams){ swell = 1 } else if (checkOneTeam) { swell = 0.5 } else { swell = 0 }
+          if (finals){
             if (scoreCorrect){
               scoreUpdated.FinalsCorrectScore = scoreUpdated.FinalsCorrectScore + swell
             }
