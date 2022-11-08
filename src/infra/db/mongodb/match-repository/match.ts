@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/restrict-plus-operands */
 import { AddMatchRepository } from '../../../../data/protocols/add-match-repository'
 import { MatchModel } from '../../../../domain/models/match'
 import { ScoreModel } from '../../../../domain/models/score'
@@ -23,21 +24,21 @@ export class MatchMongoRepository implements AddMatchRepository {
       let scoreUpdated: ScoreModel
       if (!playerDoc.score){
         scoreUpdated = {
-          FirstRoundCorrectResult: 0,
-          FirstRoundCorrectScore: 0,
-          GroupPositionCorrect: 0,
-          RoundOf16CorrectResult: 0,
-          RoundOf16CorrectScore: 0,
-          QuarterfinalsCorrectResult: 0,
-          QuarterfinalsCorrectScore: 0,
-          SemifinalsCorrectResult: 0,
-          SemifinalsCorrectScore: 0,
-          FinalsCorrectResult: 0,
-          FinalsCorrectScore: 0,
-          Champion: 0,
-          ViceChampion: 0,
-          ThirdPlace: 0,
-          TotalPoints: 0
+          firstRoundCorrectResult: 0,
+          firstRoundCorrectScore: 0,
+          groupPositionCorrect: 0,
+          roundOf16CorrectResult: 0,
+          roundOf16CorrectScore: 0,
+          quarterfinalsCorrectResult: 0,
+          quarterfinalsCorrectScore: 0,
+          semifinalsCorrectResult: 0,
+          semifinalsCorrectScore: 0,
+          finalsCorrectResult: 0,
+          finalsCorrectScore: 0,
+          champion: 0,
+          viceChampion: 0,
+          thirdPlace: 0,
+          totalPoints: 0
         }
       } else {
         scoreUpdated = playerDoc.score
@@ -46,57 +47,18 @@ export class MatchMongoRepository implements AddMatchRepository {
         const correctWinner = matchData.winner === matchItem.winner
         const correctLooser = (matchData.teamA === matchItem.teamA || matchData.teamB === matchItem.teamB) && (!correctWinner)
         const scoreCorrect = (matchData.scoreTeamA === matchItem.scoreTeamA && matchData.scoreTeamB === matchItem.scoreTeamB)
-        const resultCorrect = (matchData.scoreTeamA !== matchItem.scoreTeamA || matchData.scoreTeamB !== matchItem.scoreTeamB) && (correctWinner || correctLooser)
+        const resultCorrect = (!scoreCorrect && (matchData.scoreTeamA !== matchItem.scoreTeamA || matchData.scoreTeamB !== matchItem.scoreTeamB)) && (correctWinner || correctLooser)
         const checkTwoTeams = (matchData.teamA === matchItem.teamA && matchData.teamB === matchItem.teamB)
         const checkOneTeam = (matchData.teamA === matchItem.teamA || matchData.teamB === matchItem.teamB)
-        const firstRound = matchData.code <= 48
-        const roundOf16 = matchData.code >= 49 && matchData.code <= 64
-        const quarterFinals = matchData.code >= 65 && matchData.code <= 72
-        const semiFinals = matchData.code >= 73 && matchData.code <= 76
-        const finals = matchData.code >= 77 && matchData.code <= 78
         let swell: number
 
         if ((matchData.code === matchItem.code)){
           if (checkTwoTeams){ swell = 1 } else if (checkOneTeam) { swell = 0.5 } else { swell = 0 }
-          if (firstRound){
-            if (scoreCorrect){
-              scoreUpdated.FirstRoundCorrectScore++
-            }
-            if (resultCorrect){
-              scoreUpdated.FirstRoundCorrectResult++
-            }
+          if (scoreCorrect){
+            scoreUpdated[matchItem.phase + 'CorrectScore'] = scoreUpdated[matchItem.phase + 'CorrectScore'] + swell
           }
-          if (roundOf16){
-            if (scoreCorrect){
-              scoreUpdated.RoundOf16CorrectScore = scoreUpdated.RoundOf16CorrectScore + swell
-            }
-            if (resultCorrect){
-              scoreUpdated.RoundOf16CorrectResult = scoreUpdated.RoundOf16CorrectResult + swell
-            }
-          }
-          if (quarterFinals){
-            if (scoreCorrect){
-              scoreUpdated.QuarterfinalsCorrectScore = scoreUpdated.QuarterfinalsCorrectScore + swell
-            }
-            if (resultCorrect){
-              scoreUpdated.QuarterfinalsCorrectResult = scoreUpdated.QuarterfinalsCorrectResult + swell
-            }
-          }
-          if (semiFinals){
-            if (scoreCorrect){
-              scoreUpdated.SemifinalsCorrectScore = scoreUpdated.SemifinalsCorrectScore + swell
-            }
-            if (resultCorrect){
-              scoreUpdated.SemifinalsCorrectResult = scoreUpdated.SemifinalsCorrectResult + swell
-            }
-          }
-          if (finals){
-            if (scoreCorrect){
-              scoreUpdated.FinalsCorrectScore = scoreUpdated.FinalsCorrectScore + swell
-            }
-            if (resultCorrect){
-              scoreUpdated.FinalsCorrectResult = scoreUpdated.FinalsCorrectResult + swell
-            }
+          if (resultCorrect){
+            scoreUpdated[matchItem.phase + 'CorrectResult'] = scoreUpdated[matchItem.phase + 'CorrectResult'] + swell
           }
         }
       })
