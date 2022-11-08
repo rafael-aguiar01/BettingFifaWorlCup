@@ -18,7 +18,8 @@ const makeFakeMatch = (): MatchModel => ({
   scoreTeamA: 2,
   teamB: 'valid_TeamB',
   scoreTeamB: 1,
-  winner: 'valid_team'
+  winner: 'valid_team',
+  phase: 'valid_phase'
 })
 
 const makeFakeMatchData = (): MatchModel => ({
@@ -27,7 +28,8 @@ const makeFakeMatchData = (): MatchModel => ({
   scoreTeamA: 2,
   teamB: 'valid_TeamB',
   scoreTeamB: 1,
-  winner: 'valid_team'
+  winner: 'valid_team',
+  phase: 'valid_phase'
 })
 
 interface SutTypes {
@@ -55,7 +57,8 @@ describe('DbAddMatch Usecase', () => {
       scoreTeamA: 2,
       teamB: 'valid_TeamB',
       scoreTeamB: 1,
-      winner: 'valid_team'
+      winner: 'valid_team',
+      phase: 'valid_phase'
     })
   })
 

@@ -9,7 +9,8 @@ const makeFakeMatch = (): MatchModel => ({
   code: 2,
   teamA: 'valid_teamA',
   teamB: 'valid_teamB',
-  winner: 'valid_winner'
+  winner: 'valid_winner',
+  phase: 'valid_phase'
 })
 
 const makeFakeRequest = (): HttpRequest => ({
@@ -17,7 +18,8 @@ const makeFakeRequest = (): HttpRequest => ({
     code: 2,
     teamA: 'valid_teamA',
     teamB: 'valid_teamB',
-    winner: 'valid_winner'
+    winner: 'valid_winner',
+    phase: 'valid_phase'
   }
 })
 
@@ -103,7 +105,8 @@ describe('AddMatch Controller', () => {
     expect(addSpy).toHaveBeenCalledWith({
       code: 2,
       teamA: 'valid_teamA',
-      teamB: 'valid_teamB'
+      teamB: 'valid_teamB',
+      phase: 'valid_phase'
     })
   })
 })

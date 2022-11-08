@@ -27,7 +27,8 @@ describe('Match Mongo Repository', () => {
       scoreTeamA: 1,
       teamB: 'any_teamB',
       scoreTeamB: 2,
-      winner: 'valid_winner'
+      winner: 'valid_winner',
+      phase: 'valid_phase'
     })
     expect(match).toBeTruthy()
     expect(match.code).toBe(2)

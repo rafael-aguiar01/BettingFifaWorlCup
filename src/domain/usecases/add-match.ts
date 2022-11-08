@@ -7,6 +7,7 @@ export interface AddMatchModel {
   teamB: string
   scoreTeamB?: number
   winner?: string
+  phase: string
 }
 
 export interface AddMatch {

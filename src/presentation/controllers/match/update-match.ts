@@ -18,14 +18,15 @@ export class UpdateMatchController implements Controller {
           return badRequest(new MissingParamError(field))
         }
       }
-      const { code, teamA, scoreTeamA, teamB, scoreTeamB, winner } = httpRequest.body
+      const { code, teamA, scoreTeamA, teamB, scoreTeamB, winner, phase } = httpRequest.body
       const match = await this.updateMatch.update({
         code,
         teamA,
         scoreTeamA,
         teamB,
         scoreTeamB,
-        winner
+        winner,
+        phase
       })
       return ok(match)
     } catch (error) {

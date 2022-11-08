@@ -16,7 +16,8 @@ const makeFakeMatch = (): MatchModel => ({
   scoreTeamA: 2,
   teamB: 'valid_teamB',
   scoreTeamB: 1,
-  winner: 'valid_winner'
+  winner: 'valid_winner',
+  phase: 'valid_phase'
 })
 
 const makeFakeUpdateMatchData = (): UpdateMatchModel => ({
@@ -25,7 +26,8 @@ const makeFakeUpdateMatchData = (): UpdateMatchModel => ({
   scoreTeamA: 2,
   teamB: 'valid_teamB',
   scoreTeamB: 1,
-  winner: 'valid_winner'
+  winner: 'valid_winner',
+  phase: 'valid_phase'
 })
 
 interface SutTypes {
@@ -53,7 +55,8 @@ describe('DbUpdate Usecase', () => {
       scoreTeamA: 2,
       teamB: 'valid_teamB',
       scoreTeamB: 1,
-      winner: 'valid_winner'
+      winner: 'valid_winner',
+      phase: 'valid_phase'
     })
   })
 

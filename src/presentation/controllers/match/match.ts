@@ -12,17 +12,18 @@ export class AddMatchController implements Controller {
 
   async handle (httpRequest: HttpRequest): Promise<HttpResponse>{
     try {
-      const requiredFields = ['code', 'teamA', 'teamB']
+      const requiredFields = ['code', 'teamA', 'teamB', 'phase']
       for (const field of requiredFields) {
         if (!httpRequest.body[field]) {
           return badRequest(new MissingParamError(field))
         }
       }
-      const { code, teamA, teamB } = httpRequest.body
+      const { code, teamA, teamB, phase } = httpRequest.body
       const match = await this.addMatch.add({
         code,
         teamA,
-        teamB
+        teamB,
+        phase
       })
       return ok(match)
     } catch (error) {

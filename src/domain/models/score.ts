@@ -1,17 +1,17 @@
 export interface ScoreModel {
-  FirstRoundCorrectResult: number
-  FirstRoundCorrectScore: number
-  GroupPositionCorrect: number
-  RoundOf16CorrectResult: number
-  RoundOf16CorrectScore: number
-  QuarterfinalsCorrectResult: number
-  QuarterfinalsCorrectScore: number
-  SemifinalsCorrectResult: number
-  SemifinalsCorrectScore: number
-  FinalsCorrectResult: number
-  FinalsCorrectScore: number
-  Champion: number
-  ViceChampion: number
-  ThirdPlace: number
-  TotalPoints: number
+  firstRoundCorrectResult: number
+  firstRoundCorrectScore: number
+  groupPositionCorrect: number
+  roundOf16CorrectResult: number
+  roundOf16CorrectScore: number
+  quarterfinalsCorrectResult: number
+  quarterfinalsCorrectScore: number
+  semifinalsCorrectResult: number
+  semifinalsCorrectScore: number
+  finalsCorrectResult: number
+  finalsCorrectScore: number
+  champion: number
+  viceChampion: number
+  thirdPlace: number
+  totalPoints: number
 }

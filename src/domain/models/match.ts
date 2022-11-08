@@ -5,4 +5,5 @@ export interface MatchModel {
   teamB: string
   scoreTeamB?: number
   winner?: string
+  phase: string
 }

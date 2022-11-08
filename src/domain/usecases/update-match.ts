@@ -5,6 +5,7 @@ export interface UpdateMatchModel {
   teamB: string
   scoreTeamB?: number
   winner?: string
+  phase: string
 }
 
 export interface UpdateMatch {

@@ -10,7 +10,8 @@ const makeFakeMatch = (): UpdateMatchModel => ({
   scoreTeamA: 1,
   teamB: 'valid_teamB',
   scoreTeamB: 2,
-  winner: 'valid_winner'
+  winner: 'valid_winner',
+  phase: 'valid_phase'
 })
 
 const makeFakeRequest = (): HttpRequest => ({
@@ -20,7 +21,8 @@ const makeFakeRequest = (): HttpRequest => ({
     scoreTeamA: 1,
     teamB: 'valid_teamB',
     scoreTeamB: 2,
-    winner: 'valid_winner'
+    winner: 'valid_winner',
+    phase: 'valid_phase'
   }
 })
 
@@ -131,7 +133,8 @@ describe('UpdateMatch Controller', () => {
       scoreTeamA: 1,
       teamB: 'valid_teamB',
       scoreTeamB: 2,
-      winner: 'valid_winner'
+      winner: 'valid_winner',
+      phase: 'valid_phase'
     })
   })
 })
