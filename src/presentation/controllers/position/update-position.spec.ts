@@ -1,7 +1,8 @@
 import { UpdatePositionController } from './update-position'
-import { MissingParamError } from '../../errors'
-import { badRequest } from '../../helpers/http-helper'
+import { MissingParamError, ServerError } from '../../errors'
+import { badRequest, serverError } from '../../helpers/http-helper'
 import { UpdatePosition, UpdatePositionModel } from '../../../domain/usecases/update-position'
+import { HttpRequest } from '../../protocols'
 
 const makeFakePosition = (): UpdatePositionModel => ({
   code: 'valid_code',
@@ -9,6 +10,16 @@ const makeFakePosition = (): UpdatePositionModel => ({
   second: 'valid_team2',
   third: 'valid_team3',
   fourth: 'valid_team4'
+})
+
+const makeFakeRequest = (): HttpRequest => ({
+  body: {
+    code: 'valid_code',
+    first: 'valid_team1',
+    second: 'valid_team2',
+    third: 'valid_team3',
+    fourth: 'valid_team4'
+  }
 })
 
 const makeUpdatePosition = (): UpdatePosition => {
@@ -108,5 +119,14 @@ describe('UpdatePosition Controller', () => {
     const httpResponse = await sut.handle(httpRequest)
     expect(httpResponse.statusCode).toBe(400)
     expect(httpResponse).toEqual(badRequest(new MissingParamError('fourth')))
+  })
+
+  test('Should return 500 if UpdatePosition throws', async () => {
+    const { sut, updatePositionStub } = makeSut()
+    jest.spyOn(updatePositionStub, 'update').mockImplementationOnce(async () => {
+      return new Promise((resolve, reject) => reject(new Error()))
+    })
+    const httpResponse = await sut.handle(makeFakeRequest())
+    expect(httpResponse).toEqual(serverError(new ServerError(null)))
   })
 })
