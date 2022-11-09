@@ -5,6 +5,7 @@ export interface AddPlayerModel {
   cellphone: string
   matches: object
   position: object
+  score?: object
 }
 
 export interface AddPlayer {
