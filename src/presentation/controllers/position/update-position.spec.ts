@@ -129,4 +129,17 @@ describe('UpdatePosition Controller', () => {
     const httpResponse = await sut.handle(makeFakeRequest())
     expect(httpResponse).toEqual(serverError(new ServerError(null)))
   })
+
+  test('Should call UpdatePosition with correct values', async () => {
+    const { sut, updatePositionStub } = makeSut()
+    const addSpy = jest.spyOn(updatePositionStub, 'update')
+    await sut.handle(makeFakeRequest())
+    expect(addSpy).toHaveBeenCalledWith({
+      code: 'valid_code',
+      first: 'valid_team1',
+      second: 'valid_team2',
+      third: 'valid_team3',
+      fourth: 'valid_team4'
+    })
+  })
 })
