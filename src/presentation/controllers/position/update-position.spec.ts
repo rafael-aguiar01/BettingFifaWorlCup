@@ -79,4 +79,19 @@ describe('UpdatePosition Controller', () => {
     expect(httpResponse.statusCode).toBe(400)
     expect(httpResponse).toEqual(badRequest(new MissingParamError('second')))
   })
+
+  test('Should return 400 if no third is provided', async () => {
+    const { sut } = makeSut()
+    const httpRequest = {
+      body: {
+        code: 'valid_code',
+        first: 'valid_team1',
+        second: 'valid_team2',
+        fourth: 'valid_team4'
+      }
+    }
+    const httpResponse = await sut.handle(httpRequest)
+    expect(httpResponse.statusCode).toBe(400)
+    expect(httpResponse).toEqual(badRequest(new MissingParamError('third')))
+  })
 })
