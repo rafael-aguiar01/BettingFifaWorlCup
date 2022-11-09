@@ -25,7 +25,8 @@ describe('Match Routes', () => {
         scoreTeamA: 1,
         teamB: 'valid_teamB',
         scoreTeamB: 2,
-        winner: 'winner'
+        winner: 'winner',
+        phase: 'valid_phase'
       })
       .expect(200)
   })
