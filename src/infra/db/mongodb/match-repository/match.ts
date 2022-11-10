@@ -20,11 +20,11 @@ export class MatchMongoRepository implements AddMatchRepository {
       { $set: { scoreTeamA: matchData.scoreTeamA, scoreTeamB: matchData.scoreTeamB, winner: matchData.winner } }
     )
     const playerCollection = await MongoHelper.getCollection('players')
-    await playerCollection.find().forEach(async function (playerDoc) {
+    await playerCollection.find().forEach(async (playerDoc) => {
       let scoreUpdated: ScoreModel
       // eslint-disable-next-line prefer-const
       scoreUpdated = playerDoc.score
-      playerDoc.matches.forEach(async function (matchItem){
+      playerDoc.matches.forEach(async (matchItem) => {
         const correctWinner = matchData.winner === matchItem.winner
         const correctLooser = (matchData.teamA === matchItem.teamA || matchData.teamB === matchItem.teamB) && (!correctWinner)
         const scoreCorrect = (matchData.scoreTeamA === matchItem.scoreTeamA && matchData.scoreTeamB === matchItem.scoreTeamB)
