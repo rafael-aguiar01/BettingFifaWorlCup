@@ -1,6 +1,4 @@
-import { MatchModel } from '../../../domain/models/match'
-import { UpdateMatchModel, UpdateMatch } from '../../../domain/usecases/update-match'
-import { UpdateMatchRepository } from '../../protocols/update-match-repository'
+import { MatchModel, UpdateMatchModel, UpdateMatch, UpdateMatchRepository } from './db-update-match-protocols'
 
 export class DbUpdateMatch implements UpdateMatch {
   private readonly updateMatchRepository: UpdateMatchRepository

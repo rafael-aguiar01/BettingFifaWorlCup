@@ -1,5 +1,4 @@
-import { PositionModel, UpdatePositionModel, UpdatePosition } from './db-update-position-protocols'
-import { UpdatePositionRepository } from '../../protocols/update-position-repository'
+import { PositionModel, UpdatePositionModel, UpdatePosition, UpdatePositionRepository } from './db-update-position-protocols'
 
 export class DbUpdatePosition implements UpdatePosition {
   private readonly updatePositionRepository: UpdatePositionRepository
