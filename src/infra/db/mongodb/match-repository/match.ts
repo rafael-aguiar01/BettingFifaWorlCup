@@ -43,6 +43,35 @@ export class MatchMongoRepository implements AddMatchRepository {
           }
         }
       })
+      const firstRoundCorrectResult = 6
+      const firstRoundCorrectScore = 10
+      const groupPositionCorrect = 10
+      const roundOf16CorrectResult = 15
+      const roundOf16CorrectScore = 20
+      const quarterfinalsCorrectResult = 30
+      const quarterfinalsCorrectScore = 40
+      const semifinalsCorrectResult = 50
+      const semifinalsCorrectScore = 70
+      const finalsCorrectResult = 70
+      const finalsCorrectScore = 100
+      const champion = 200
+      const viceChampion = 75
+      const thirdPlace = 50
+
+      scoreUpdated.totalPoints = (scoreUpdated.firstRoundCorrectResult * firstRoundCorrectResult) +
+                                 (scoreUpdated.firstRoundCorrectScore * firstRoundCorrectScore) +
+                                 (scoreUpdated.groupPositionCorrect * groupPositionCorrect) +
+                                 (scoreUpdated.roundOf16CorrectResult * roundOf16CorrectResult) +
+                                 (scoreUpdated.roundOf16CorrectScore * roundOf16CorrectScore) +
+                                 (scoreUpdated.quarterfinalsCorrectResult * quarterfinalsCorrectResult) +
+                                 (scoreUpdated.quarterfinalsCorrectScore * quarterfinalsCorrectScore) +
+                                 (scoreUpdated.semifinalsCorrectResult * semifinalsCorrectResult) +
+                                 (scoreUpdated.semifinalsCorrectScore * semifinalsCorrectScore) +
+                                 (scoreUpdated.finalsCorrectResult * finalsCorrectResult) +
+                                 (scoreUpdated.finalsCorrectScore * finalsCorrectScore) +
+                                 (scoreUpdated.champion * champion) +
+                                 (scoreUpdated.viceChampion * viceChampion) +
+                                 (scoreUpdated.thirdPlace * thirdPlace)
       await playerCollection.updateOne(
         { _id: playerDoc._id },
         { $set: { score: scoreUpdated } }
