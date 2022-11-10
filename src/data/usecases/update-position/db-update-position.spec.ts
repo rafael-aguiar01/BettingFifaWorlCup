@@ -1,5 +1,4 @@
-import { UpdatePositionRepository } from '../../protocols/update-position-repository'
-import { UpdatePositionModel } from '../../../domain/usecases/update-position'
+import { UpdatePositionRepository, UpdatePositionModel } from './db-update-position-protocols'
 import { DbUpdatePosition } from './db-update-position'
 
 const makeUpdatePositionRepository = (): UpdatePositionRepository => {

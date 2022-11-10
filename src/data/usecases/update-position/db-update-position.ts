@@ -1,5 +1,4 @@
-import { PositionModel } from '../../../domain/models/position'
-import { UpdatePositionModel, UpdatePosition } from '../../../domain/usecases/update-position'
+import { PositionModel, UpdatePositionModel, UpdatePosition } from './db-update-position-protocols'
 import { UpdatePositionRepository } from '../../protocols/update-position-repository'
 
 export class DbUpdatePosition implements UpdatePosition {
