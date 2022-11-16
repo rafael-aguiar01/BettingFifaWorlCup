@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/restrict-plus-operands */
 import { AddMatchRepository } from '../../../../data/protocols/add-match-repository'
 import { MatchModel } from '../../../../domain/models/match'
 import { ScoreModel } from '../../../../domain/models/score'
@@ -36,10 +35,10 @@ export class MatchMongoRepository implements AddMatchRepository {
         if ((matchData.code === matchItem.code)){
           if (checkTwoTeams){ swell = 1 } else if (checkOneTeam) { swell = 0.5 } else { swell = 0 }
           if (scoreCorrect){
-            scoreUpdated[matchItem.phase + 'CorrectScore'] = scoreUpdated[matchItem.phase + 'CorrectScore'] + swell
+            scoreUpdated[String(matchItem.phase) + 'CorrectScore'] = Number(scoreUpdated[String(matchItem.phase) + 'CorrectScore']) + swell
           }
           if (resultCorrect){
-            scoreUpdated[matchItem.phase + 'CorrectResult'] = scoreUpdated[matchItem.phase + 'CorrectResult'] + swell
+            scoreUpdated[String(matchItem.phase) + 'CorrectResult'] = Number(scoreUpdated[String(matchItem.phase) + 'CorrectResult']) + swell
           }
         }
       })
