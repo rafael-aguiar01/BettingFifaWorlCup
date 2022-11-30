@@ -9,4 +9,12 @@ export class PointMongoRepository implements AddPointRepository {
     const result = await positionCollection.insertOne(positionData)
     return MongoHelper.map(result.ops[0])
   }
+
+  async list (): Promise<any> {
+    const playerCollection = await MongoHelper.getCollection('players')
+    const result = await playerCollection.find({}).forEach(async (playerDoc) => {
+      console.log(result)
+    })
+    return result
+  }
 }
